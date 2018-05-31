@@ -1,13 +1,12 @@
-package com.wawgoo.wawgooreading;
+package com.zsd;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
-import android.widget.TextView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.zsd.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,8 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, BookDetailActivity.class);
-        startActivity(intent);
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager. beginTransaction();
+        transaction.replace(R.id.fragment_fl, homeFragment).commit();
+
+//        Intent intent = new Intent(this, BookDetailActivity.class);
+//        startActivity(intent);
 
 
 //        final TextView tv = (TextView) findViewById(R.id.text);

@@ -1,6 +1,5 @@
-package com.wawgoo.wawgooreading;
+package com.zsd.bookdetail;
 
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wawgoo.wawgooreading.beans.Book;
+import com.zsd.LogUtils;
+import com.zsd.R;
+import com.zsd.beans.Book;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by aabingoo on 2017/9/3.
@@ -25,7 +25,7 @@ public class BookDetailRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("RvTest", "onCreateViewHolder");
+        LogUtils.d("RvTest", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.view_book_detail_item, parent, false);
         return new BookDetailItem(view);
@@ -33,7 +33,7 @@ public class BookDetailRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d("RvTest", "onBindViewHolder pos:" + position + "  str:");
+        LogUtils.d("RvTest", "onBindViewHolder pos:" + position + "  str:");
         List<String> list = new ArrayList<>();
         list.addAll(mBook.getChapters().keySet());
         BookDetailItem bookDetailItem = (BookDetailItem) holder;
@@ -42,13 +42,13 @@ public class BookDetailRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        Log.d("RvTest", "getItemCount:" + mBook.getChapters().size());
+        LogUtils.d("RvTest", "getItemCount:" + mBook.getChapters().size());
         return mBook.getChapters().size();
     }
 
     public void notifyDataSetChanged(final Book book) {
         if (book != null) {
-            Log.d("CrawlerTest", "notifyDataSetChanged:" + book.getChapters().size());
+            LogUtils.d("CrawlerTest", "notifyDataSetChanged:" + book.getChapters().size());
             mBook = book;
             notifyDataSetChanged();
         }

@@ -1,4 +1,4 @@
-package com.wawgoo.wawgooreading.beans;
+package com.zsd.beans;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,6 +22,10 @@ public class Book {
         this();
         mName = name;
         mUrl = url;
+    }
+
+    public String getName() {
+        return mName;
     }
 
     public String getUrl() {

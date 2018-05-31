@@ -1,4 +1,4 @@
-package com.wawgoo.wawgooreading;
+package com.zsd;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class LogUtils {
 
-    private static final String TAG = "ReadingLog";
+    private static final String TAG = "ZsdLog";
     private static final boolean DEBUG = true;
 
     public static void i(String className, String msg) {

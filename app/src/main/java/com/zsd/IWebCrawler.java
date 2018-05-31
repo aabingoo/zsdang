@@ -1,4 +1,4 @@
-package com.wawgoo.wawgooreading;
+package com.zsd;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

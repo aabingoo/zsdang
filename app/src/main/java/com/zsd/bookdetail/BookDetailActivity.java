@@ -1,4 +1,4 @@
-package com.wawgoo.wawgooreading;
+package com.zsd.bookdetail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,14 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.wawgoo.wawgooreading.beans.Book;
+import com.zsd.DataBaseModel;
+import com.zsd.R;
+import com.zsd.beans.Book;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class BookDetailActivity extends AppCompatActivity {
+
+    private static final String TAG = "BookDetailActivity";
 
     private RecyclerView mBookDetailRv;
     private BookDetailRvAdapter mBookDetailRvAdapter;

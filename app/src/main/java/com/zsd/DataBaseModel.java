@@ -1,15 +1,12 @@
-package com.wawgoo.wawgooreading;
+package com.zsd;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.wawgoo.wawgooreading.beans.Book;
+import com.zsd.beans.Book;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * Created by aabingoo on 2017/9/3.
