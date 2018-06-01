@@ -1,4 +1,4 @@
-package com.zsd.home;
+package com.zsdang.home;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsd.LogUtils;
-import com.zsd.R;
-import com.zsd.beans.Book;
+import com.zsdang.LogUtils;
+import com.zsdang.R;
+import com.zsdang.beans.Book;
 
 import java.util.ArrayList;
 import java.util.List;

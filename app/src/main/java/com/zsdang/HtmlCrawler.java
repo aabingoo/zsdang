@@ -1,7 +1,6 @@
-package com.zsd;
+package com.zsdang;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,7 +31,7 @@ public class HtmlCrawler implements IWebCrawler {
                 if (!TextUtils.isEmpty(bookUrl)) {
                     try {
                         LinkedHashMap<String, String> chapters = new LinkedHashMap<>();
-                        Log.d("CrawlerTest", "crawlerBookContent() - Start to crawl uri:" + bookUrl);
+                        LogUtils.d("CrawlerTest", "crawlerBookContent() - Start to crawl uri:" + bookUrl);
                         // Get Html content.
                         Document document = Jsoup.connect(bookUrl).get();
                         document = Jsoup.parse(document.toString());
@@ -42,8 +41,9 @@ public class HtmlCrawler implements IWebCrawler {
                         Elements chapterElements = divElement.child(0).select("dl > dd");
                         LogUtils.d(TAG, "Chapter size:" + chapterElements.size());
 
-                        // Loop the chapter list.
-                        for (Element chapterElement: chapterElements) {
+                        // Loop the chapter list. reverse
+                        for (int i = chapterElements.size() - 1; i >= 0; i--) {
+                            Element chapterElement = chapterElements.get(i);
                             Element aElement = chapterElement.child(0);
                             String hrefStr = aElement.attr("href");
                             String chapterStr = aElement.text();

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/book_detail_fragment_fl"
+        android:id="@+id/reading_fragment_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

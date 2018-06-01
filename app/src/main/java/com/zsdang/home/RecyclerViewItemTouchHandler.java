@@ -1,13 +1,10 @@
-package com.zsd.home;
+package com.zsdang.home;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.zsd.LogUtils;
 
 /**
  * Created by BinyongSu on 2018/5/31.

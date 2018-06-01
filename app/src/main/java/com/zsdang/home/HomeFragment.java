@@ -1,4 +1,4 @@
-package com.zsd.home;
+package com.zsdang.home;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,13 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.zsd.LogUtils;
-import com.zsd.R;
-import com.zsd.beans.Book;
-import com.zsd.bookdetail.BookDetailActivity;
+import com.zsdang.LogUtils;
+import com.zsdang.R;
+import com.zsdang.beans.Book;
+import com.zsdang.bookdetail.BookDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,8 +32,8 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView mReadBooksRecyclerView;
     private ReadBooksRecyclerViewAdapter mReadBooksRecyclerViewAdapter;
-    private TextView textView;
     private Button mContinueReadingBtn;
+    private List<Book> mBooks;
 
     // Callbacks for ReadBooksLoader
     private LoaderManager.LoaderCallbacks<List<Book>> mReadBooksCallbacks;
@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mBooks = new ArrayList<>();
     }
 
     @Nullable
@@ -75,7 +77,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int pos) {
                         LogUtils.d(TAG, "onItemClick:" + pos);
-                        enterBookDetail();
+                        if (mBooks != null && pos < mBooks.size()) {
+                            enterBookDetail(mBooks.get(pos));
+                        }
                     }
 
                     @Override
@@ -99,7 +103,8 @@ public class HomeFragment extends Fragment {
                     return;
                 }
 
-                mReadBooksRecyclerViewAdapter.notifyDataSetChanged(books);
+                mBooks = books;
+                mReadBooksRecyclerViewAdapter.notifyDataSetChanged(mBooks);
             }
 
             @Override
@@ -122,10 +127,11 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void enterBookDetail() {
+    private void enterBookDetail(Book book) {
         if (isAdded()) {
             Activity activity = getActivity();
             Intent intent = new Intent(activity, BookDetailActivity.class);
+            intent.putExtra("book", book);
             activity.startActivity(intent);
         }
     }

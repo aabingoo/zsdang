@@ -1,10 +1,10 @@
-package com.zsd.home;
+package com.zsdang.home;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.zsd.LogUtils;
-import com.zsd.beans.Book;
+import com.zsdang.LogUtils;
+import com.zsdang.beans.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,32 +41,11 @@ public class ReadBooksLoader extends AsyncTaskLoader<List<Book>> {
 
         List<Book> books = new ArrayList<>();
 
-        books.add(new Book("1", "11"));
-        books.add(new Book("12", "112"));
-        books.add(new Book("13", "113"));
-        books.add(new Book("14", "114"));
-        books.add(new Book("15", "115"));
-        books.add(new Book("1", "11"));
-        books.add(new Book("12", "112"));
-        books.add(new Book("13", "113"));
-        books.add(new Book("14", "114"));
-        books.add(new Book("15", "115"));
-        books.add(new Book("1", "11"));
-        books.add(new Book("12", "112"));
-        books.add(new Book("13", "113"));
-        books.add(new Book("14", "114"));
-        books.add(new Book("15", "115"));
-        books.add(new Book("1", "11"));
-        books.add(new Book("12", "112"));
-        books.add(new Book("13", "113"));
-        books.add(new Book("14", "114"));
-        books.add(new Book("15", "115"));
-        books.add(new Book("1", "11"));
-        books.add(new Book("12", "112"));
-        books.add(new Book("13", "113"));
-        books.add(new Book("14", "114"));
-        books.add(new Book("15", "115"));
-
+        books.add(new Book("凡人修仙之仙界篇", "https://www.qu.la/book/3353/"));
+        books.add(new Book("圣墟", "https://www.qu.la/book/24868/"));
+        books.add(new Book("凡人修仙传", "http://www.qu.la/book/401/"));
+        books.add(new Book("凡人修仙传", "http://www.qu.la/book/401/"));
+        books.add(new Book("遮天", "http://www.qu.la/book/394/"));
         return books;
     }
 

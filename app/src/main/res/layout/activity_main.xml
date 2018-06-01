@@ -11,12 +11,4 @@
 
     </FrameLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/text"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:scrollbars="vertical"-->
-        <!--android:textSize="16sp"-->
-        <!--android:lineSpacingExtra="6dp"/>-->
-
 </LinearLayout>
