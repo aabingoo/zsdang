@@ -3,6 +3,7 @@ package com.zsdang.home;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
@@ -18,9 +19,15 @@ import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.bookdetail.BookDetailActivity;
+import com.zsdang.db.LocalBooksProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
+import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
+import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
+import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
 
 /**
  * Created by BinyongSu on 2018/5/31.
@@ -124,7 +131,29 @@ public class HomeFragment extends Fragment {
 
     private void continueReading() {
         LogUtils.d(TAG, "onLoaderReset");
+        update();
+    }
 
+    public int i = 20;
+
+    public void insert() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
+        contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
+        contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + i++);
+        getActivity().getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
+    }
+    public int deleteJ = 50;
+    public void delete() {
+        getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, BOOKS_COLUMN_ID + "=" + deleteJ--, null);
+    }
+    public int updateI = 100;
+    public void update() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BOOKS_COLUMN_NAME, "fanren" + updateI);
+        contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + updateI);
+        contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + updateI++);
+        getActivity().getContentResolver().update(LocalBooksProvider.CONTENT_URI, contentValues, BOOKS_COLUMN_ID + "=1", null);
     }
 
     private void enterBookDetail(Book book) {

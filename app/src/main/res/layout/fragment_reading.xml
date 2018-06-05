@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/loading_pb"
+        layout="@layout/view_loading"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"

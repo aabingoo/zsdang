@@ -34,6 +34,7 @@ public class BookDetailFragment extends Fragment {
     private List<String> mChapterNameList = new ArrayList<>();
     private RecyclerView mBookDetailRv;
     private BookDetailRvAdapter mBookDetailRvAdapter;
+    private View mLoadingView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class BookDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
         mBookDetailRv = rootView.findViewById(R.id.book_detail_rv);
+        mLoadingView = rootView.findViewById(R.id.loading_pb);
+        mLoadingView.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -120,6 +123,7 @@ public class BookDetailFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    mLoadingView.setVisibility(View.GONE);
                                     mBookDetailRvAdapter.notifyDataSetChanged(mBook);
                                 }
                             });

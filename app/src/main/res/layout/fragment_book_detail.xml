@@ -3,6 +3,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/loading_pb"
+        layout="@layout/view_loading"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/book_detail_rv"
         android:layout_width="match_parent"

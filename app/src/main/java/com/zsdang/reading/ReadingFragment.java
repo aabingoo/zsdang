@@ -25,6 +25,7 @@ public class ReadingFragment extends Fragment {
 
     private TextView titleTv;
     private TextView bodyTv;
+    private View mLoadingView;
 
 
     @Override
@@ -42,6 +43,8 @@ public class ReadingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_reading, container, false);
+        mLoadingView = rootView.findViewById(R.id.loading_pb);
+        mLoadingView.setVisibility(View.VISIBLE);
         titleTv = rootView.findViewById(R.id.title_tv);
         bodyTv = rootView.findViewById(R.id.body_tv);
         titleTv.setText(mChapter[0]);
@@ -61,6 +64,7 @@ public class ReadingFragment extends Fragment {
                         bodyTv.post(new Runnable() {
                             @Override
                             public void run() {
+                                mLoadingView.setVisibility(View.GONE);
                                 bodyTv.setText(content);
                             }
                         });
