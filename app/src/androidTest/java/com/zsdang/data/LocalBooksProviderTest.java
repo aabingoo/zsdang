@@ -1,10 +1,6 @@
-package com.zsdang.db;
-
-import android.content.ContentValues;
+package com.zsdang.data;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by BinyongSu on 2018/6/5.

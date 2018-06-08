@@ -9,15 +9,15 @@ import android.widget.Button;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
-import com.zsdang.db.LocalBooksDbOpenHelper;
-import com.zsdang.db.LocalBooksProvider;
+import com.zsdang.data.local.LocalBooksDbOpenHelper;
+import com.zsdang.data.local.LocalBooksProvider;
 
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_INTRODUCTION;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_INTRODUCTION;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
 
 public class TestActivity extends AppCompatActivity {
 

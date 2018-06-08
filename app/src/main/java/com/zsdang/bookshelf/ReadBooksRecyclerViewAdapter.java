@@ -1,4 +1,4 @@
-package com.zsdang.home;
+package com.zsdang.bookshelf;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 
@@ -30,7 +29,7 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LogUtils.d(TAG, "onCreateViewHolder");
+        //LogUtils.d(TAG, "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.view_read_book_item, parent, false);
         return new ReadBookItem(view);
@@ -38,7 +37,7 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LogUtils.d(TAG, "onBindViewHolder");
+        //LogUtils.d(TAG, "onBindViewHolder");
         Book book = mReadBooks.get(position);
         ReadBookItem readBookItem = (ReadBookItem) holder;
         readBookItem.updateView(book);
@@ -51,7 +50,7 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     public void notifyDataSetChanged(final List<Book> books) {
         if (books != null) {
-            LogUtils.d(TAG, "notifyDataSetChanged:" + books.size());
+            //LogUtils.d(TAG, "notifyDataSetChanged:" + books.size());
             mReadBooks = books;
             notifyDataSetChanged();
         }

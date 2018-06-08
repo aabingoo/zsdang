@@ -1,4 +1,4 @@
-package com.zsdang;
+package com.zsdang.data.web.crawler;
 
 import java.util.LinkedHashMap;
 

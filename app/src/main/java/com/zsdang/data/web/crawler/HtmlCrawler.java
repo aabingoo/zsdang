@@ -1,6 +1,8 @@
-package com.zsdang;
+package com.zsdang.data.web.crawler;
 
 import android.text.TextUtils;
+
+import com.zsdang.LogUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

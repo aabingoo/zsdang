@@ -1,4 +1,4 @@
-package com.zsdang.home;
+package com.zsdang.bookshelf;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,23 +19,23 @@ import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.bookdetail.BookDetailActivity;
-import com.zsdang.db.LocalBooksProvider;
+import com.zsdang.data.local.LocalBooksProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
-import static com.zsdang.db.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
 
 /**
  * Created by BinyongSu on 2018/5/31.
  */
 
-public class HomeFragment extends Fragment {
+public class BookShelfFragment extends Fragment {
 
-    private static final String TAG = "HomeFragment";
+    private static final String TAG = "BookShelfFragment";
 
     private RecyclerView mReadBooksRecyclerView;
     private ReadBooksRecyclerViewAdapter mReadBooksRecyclerViewAdapter;
@@ -45,17 +45,21 @@ public class HomeFragment extends Fragment {
     // Callbacks for ReadBooksLoader
     private LoaderManager.LoaderCallbacks<List<Book>> mReadBooksCallbacks;
 
+    public static BookShelfFragment newInstance() {
+        BookShelfFragment fragment = new BookShelfFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mBooks = new ArrayList<>();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_book_shelf, container, false);
         mReadBooksRecyclerView = rootView.findViewById(R.id.read_books_rv);
         mContinueReadingBtn = rootView.findViewById(R.id.continue_reading_btn);
         return rootView;

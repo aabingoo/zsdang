@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:support-v4:26.1.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -30,4 +31,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.3'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    // bottom navigation bar
+    compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
 }

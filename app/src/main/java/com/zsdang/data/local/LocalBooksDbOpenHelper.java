@@ -1,4 +1,4 @@
-package com.zsdang.db;
+package com.zsdang.data.local;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

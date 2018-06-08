@@ -15,7 +15,7 @@ import com.zsdang.DataBaseModel;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
-import com.zsdang.home.RecyclerViewItemTouchHandler;
+import com.zsdang.bookshelf.RecyclerViewItemTouchHandler;
 import com.zsdang.reading.ReadingActivity;
 
 import java.util.ArrayList;
@@ -30,11 +30,21 @@ public class BookDetailFragment extends Fragment {
 
     private static final String TAG = "BookDetailFragment";
 
+    public static final String ARG_PARAM_BOOK = "book";
+
     private Book mBook;
     private List<String> mChapterNameList = new ArrayList<>();
     private RecyclerView mBookDetailRv;
     private BookDetailRvAdapter mBookDetailRvAdapter;
     private View mLoadingView;
+
+    public static BookDetailFragment newInstance(Book book) {
+        BookDetailFragment fragment = new BookDetailFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_PARAM_BOOK, book);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +52,7 @@ public class BookDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mBook = bundle.getParcelable("book");
+            mBook = bundle.getParcelable(ARG_PARAM_BOOK);
         }
     }
 

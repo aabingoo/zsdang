@@ -22,8 +22,8 @@
         <activity android:name=".reading.ReadingActivity"/>
 
         <provider
-            android:name=".db.LocalBooksProvider"
-            android:authorities="com.zsdang.db.LocalBooksProvider"
+            android:name=".data.local.LocalBooksProvider"
+            android:authorities="com.zsdang.data.local.LocalBooksProvider"
             android:enabled="true"
             android:exported="true">
         </provider>

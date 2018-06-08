@@ -1,7 +1,6 @@
-package com.zsdang.db;
+package com.zsdang.data.local;
 
 import android.content.ContentProvider;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -10,15 +9,13 @@ import android.net.Uri;
 
 import com.zsdang.LogUtils;
 
-import static com.zsdang.db.LocalBooksDbOpenHelper.TABLE_NAME;
-
 public class LocalBooksProvider extends ContentProvider {
 
     private static final String TAG = "LocalBooksProvider";
 
     private static final String AUTHORITY = "com.zsdang.db.LocalBooksProvider";
 
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LocalBooksDbOpenHelper.TABLE_NAME);
 
     private static final UriMatcher URI_MATCHER;
 
@@ -32,8 +29,8 @@ public class LocalBooksProvider extends ContentProvider {
 
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(AUTHORITY, TABLE_NAME, MATCH_CODE_MULTIPLE);
-        URI_MATCHER.addURI(AUTHORITY, TABLE_NAME + "/#", MATCH_CODE_SINGLE);
+        URI_MATCHER.addURI(AUTHORITY, LocalBooksDbOpenHelper.TABLE_NAME, MATCH_CODE_MULTIPLE);
+        URI_MATCHER.addURI(AUTHORITY, LocalBooksDbOpenHelper.TABLE_NAME + "/#", MATCH_CODE_SINGLE);
     }
 
     public LocalBooksProvider() {
@@ -42,7 +39,7 @@ public class LocalBooksProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         mSQLiteDatabase = mLocalBooksDbOpenHelper.getWritableDatabase();
-        int deleteRows = mSQLiteDatabase.delete(TABLE_NAME, selection, selectionArgs);
+        int deleteRows = mSQLiteDatabase.delete(LocalBooksDbOpenHelper.TABLE_NAME, selection, selectionArgs);
         LogUtils.d(TAG, "delete:" + deleteRows);
         if (deleteRows > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
@@ -60,7 +57,7 @@ public class LocalBooksProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         mSQLiteDatabase = mLocalBooksDbOpenHelper.getWritableDatabase();
-        long id = mSQLiteDatabase.insert(TABLE_NAME, null, values);
+        long id = mSQLiteDatabase.insert(LocalBooksDbOpenHelper.TABLE_NAME, null, values);
         LogUtils.d(TAG, "insert:" + id);
         Uri appendedUri = null;
         if (id > 0) {
@@ -82,14 +79,14 @@ public class LocalBooksProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         mSQLiteDatabase = mLocalBooksDbOpenHelper.getReadableDatabase();
-        return mSQLiteDatabase.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        return mSQLiteDatabase.query(LocalBooksDbOpenHelper.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         mSQLiteDatabase = mLocalBooksDbOpenHelper.getWritableDatabase();
-        int updateRows = mSQLiteDatabase.update(TABLE_NAME, values, selection, selectionArgs);
+        int updateRows = mSQLiteDatabase.update(LocalBooksDbOpenHelper.TABLE_NAME, values, selection, selectionArgs);
         LogUtils.d(TAG, "update:" + updateRows);
         if (updateRows > 0) {
             getContext().getContentResolver().notifyChange(uri, null);

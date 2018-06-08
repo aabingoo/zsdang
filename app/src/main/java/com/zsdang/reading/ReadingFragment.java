@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsdang.HtmlCrawler;
+import com.zsdang.data.web.crawler.HtmlCrawler;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 

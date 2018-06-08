@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.zsdang.beans.Book;
+import com.zsdang.data.web.crawler.HtmlCrawler;
+import com.zsdang.data.web.crawler.IWebCrawler;
 
 import java.util.LinkedHashMap;
 
