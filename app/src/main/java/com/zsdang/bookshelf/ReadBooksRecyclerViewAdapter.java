@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zsdang.ImageLoader;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 
@@ -68,6 +69,8 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         public void updateView(Book book) {
             if (!TextUtils.isEmpty(book.getName())) {
                 bookNameTv.setText(book.getName());
+                ImageLoader imageLoader = new ImageLoader(bookNameTv);
+                imageLoader.execute("1", "2", "3");
             }
         }
     }

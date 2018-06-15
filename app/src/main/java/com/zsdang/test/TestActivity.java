@@ -40,11 +40,11 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_activity);
 
-        insertBtn = findViewById(R.id.insert);
-        queryBtn = findViewById(R.id.query);
-        deleteBtn = findViewById(R.id.delete);
-        updateBtn = findViewById(R.id.update);
-        updateDBBtn = findViewById(R.id.updateDB);
+        insertBtn = (Button) findViewById(R.id.insert);
+        queryBtn = (Button) findViewById(R.id.query);
+        deleteBtn = (Button) findViewById(R.id.delete);
+        updateBtn = (Button) findViewById(R.id.update);
+        updateDBBtn = (Button) findViewById(R.id.updateDB);
 
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override

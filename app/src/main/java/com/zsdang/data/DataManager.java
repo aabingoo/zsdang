@@ -34,6 +34,7 @@ public class DataManager {
                 LocalBooksProvider.CONTENT_URI,
                 null,
                 null,
+                null,
                 null);
 
         if (cursor != null) {

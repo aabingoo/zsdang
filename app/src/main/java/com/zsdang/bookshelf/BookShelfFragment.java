@@ -135,7 +135,7 @@ public class BookShelfFragment extends Fragment {
 
     private void continueReading() {
         LogUtils.d(TAG, "onLoaderReset");
-        update();
+        insert();
     }
 
     public int i = 20;

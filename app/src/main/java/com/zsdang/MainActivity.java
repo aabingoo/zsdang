@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
         mFragments.add(new BookShelfFragment());
         mFragments.add(new BookShelfFragment());
 
-        mBottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
+        mBottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         initBottomNavigationBar();
 
 //        Intent intent = new Intent(this, TestActivity.class);

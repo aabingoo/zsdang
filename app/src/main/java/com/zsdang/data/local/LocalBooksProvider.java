@@ -13,7 +13,7 @@ public class LocalBooksProvider extends ContentProvider {
 
     private static final String TAG = "LocalBooksProvider";
 
-    private static final String AUTHORITY = "com.zsdang.db.LocalBooksProvider";
+    private static final String AUTHORITY = "com.zsdang.data.local.LocalBooksProvider";
 
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LocalBooksDbOpenHelper.TABLE_NAME);
 
