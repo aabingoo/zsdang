@@ -28,8 +28,6 @@
             android:exported="true">
         </provider>
 
-        <activity android:name=".test.TestActivity">
-        </activity>
     </application>
 
 </manifest>

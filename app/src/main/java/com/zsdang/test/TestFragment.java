@@ -1,16 +1,21 @@
 package com.zsdang.test;
 
+
+import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.data.local.LocalBooksDbOpenHelper;
 import com.zsdang.data.local.LocalBooksProvider;
+import com.zsdang.data.web.server.DataServiceManager;
 
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
@@ -19,7 +24,12 @@ import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_C
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
 
-public class TestActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class TestFragment extends Fragment {
+
+    private static final String TAG = "TestFragment";
 
     private Button insertBtn;
     private Button queryBtn;
@@ -35,16 +45,27 @@ public class TestActivity extends AppCompatActivity {
             BOOKS_COLUMN_INTRODUCTION,
             BOOKS_COLUMN_LATEST_CHAPTER};
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_activity);
+    public static TestFragment newInstance() {
+        TestFragment fragment = new TestFragment();
+        return fragment;
+    }
 
-        insertBtn = (Button) findViewById(R.id.insert);
-        queryBtn = (Button) findViewById(R.id.query);
-        deleteBtn = (Button) findViewById(R.id.delete);
-        updateBtn = (Button) findViewById(R.id.update);
-        updateDBBtn = (Button) findViewById(R.id.updateDB);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.test_activity, container, false);
+        init(view);
+        return view;
+    }
+
+
+    public void init(View rootView) {
+        insertBtn = (Button) rootView.findViewById(R.id.insert);
+        queryBtn = (Button) rootView.findViewById(R.id.query);
+        deleteBtn = (Button) rootView.findViewById(R.id.delete);
+        updateBtn = (Button) rootView.findViewById(R.id.update);
+        updateDBBtn = (Button) rootView.findViewById(R.id.updateDB);
 
         insertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +98,16 @@ public class TestActivity extends AppCompatActivity {
         updateDBBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocalBooksDbOpenHelper helper = new LocalBooksDbOpenHelper(TestActivity.this);
+                LocalBooksDbOpenHelper helper = new LocalBooksDbOpenHelper(getActivity());
                 helper.onUpgrade(helper.getWritableDatabase(), 0, 1);
+            }
+        });
+
+        ((Button) rootView.findViewById(R.id.queryBookstore)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataServiceManager manager = new DataServiceManager();
+//                manager.queryBookstore();
             }
         });
     }
@@ -90,11 +119,11 @@ public class TestActivity extends AppCompatActivity {
         contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
         contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
         contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + i++);
-        getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
+        getActivity().getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
     }
 
     public void query(String selection, String[] selectionArgs) {
-        Cursor cursor = getContentResolver().query(LocalBooksProvider.CONTENT_URI,
+        Cursor cursor = getActivity().getContentResolver().query(LocalBooksProvider.CONTENT_URI,
                 mProjection, selection, selectionArgs, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -111,6 +140,7 @@ public class TestActivity extends AppCompatActivity {
     }
     public int deleteJ = 50;
     public void delete() {
-        getContentResolver().delete(LocalBooksProvider.CONTENT_URI, BOOKS_COLUMN_ID + "=" + deleteJ--, null);
+        getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, BOOKS_COLUMN_ID + "=" + deleteJ--, null);
     }
+
 }

@@ -33,4 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="updateDB"/>
+
+    <Button
+        android:id="@+id/queryBookstore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="queryBookstore"/>
 </LinearLayout>

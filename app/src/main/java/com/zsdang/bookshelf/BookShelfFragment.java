@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +40,6 @@ public class BookShelfFragment extends Fragment {
 
     private RecyclerView mReadBooksRecyclerView;
     private ReadBooksRecyclerViewAdapter mReadBooksRecyclerViewAdapter;
-    private Button mContinueReadingBtn;
     private List<Book> mBooks;
 
     // Callbacks for ReadBooksLoader
@@ -61,7 +61,6 @@ public class BookShelfFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_shelf, container, false);
         mReadBooksRecyclerView = rootView.findViewById(R.id.read_books_rv);
-        mContinueReadingBtn = rootView.findViewById(R.id.continue_reading_btn);
         return rootView;
 
     }
@@ -70,17 +69,12 @@ public class BookShelfFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        LogUtils.d(TAG, "onActivityCreated");
+
         final Activity activity = getActivity();
 
-        mContinueReadingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                continueReading();
-            }
-        });
-
         // Init RecyclerView and set its adapter
-        mReadBooksRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        mReadBooksRecyclerView.setLayoutManager(new GridLayoutManager(activity, 3));//new LinearLayoutManager(activity));
         mReadBooksRecyclerViewAdapter = new ReadBooksRecyclerViewAdapter();
         mReadBooksRecyclerView.setAdapter(mReadBooksRecyclerViewAdapter);
         mReadBooksRecyclerView.addOnItemTouchListener(new RecyclerViewItemTouchHandler(activity,

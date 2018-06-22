@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zsdang.bookshelf.BookShelfFragment;
+import com.zsdang.bookstore.BookStoreFragment;
+import com.zsdang.my.MyFragment;
+import com.zsdang.test.TestFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     private final int FRAGMENT_INDEX_GAME = 3;
 
     private List<Fragment> mFragments;
+    private int currentPos = -1;
 
     private BottomNavigationBar mBottomNavigationBar;
 
@@ -34,10 +38,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mFragments = new ArrayList<>();
-        mFragments.add(new BookShelfFragment());
-        mFragments.add(new BookShelfFragment());
-        mFragments.add(new BookShelfFragment());
-        mFragments.add(new BookShelfFragment());
+        mFragments.add(BookShelfFragment.newInstance());
+        mFragments.add(BookStoreFragment.newInstance());
+        mFragments.add(MyFragment.newInstance());
+        mFragments.add(TestFragment.newInstance());
 
         mBottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         initBottomNavigationBar();
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity
             .addItem(new BottomNavigationItem(R.drawable.ic_home, "Home").setActiveColor(Color.RED))
             .addItem(new BottomNavigationItem(R.drawable.ic_music, "Music").setActiveColor(Color.GREEN))
             .addItem(new BottomNavigationItem(R.drawable.ic_tv, "TV").setActiveColor(Color.BLUE))
-            .addItem(new BottomNavigationItem(R.drawable.ic_videogame, "Game").setActiveColor(Color.YELLOW))
+                .addItem(new BottomNavigationItem(R.drawable.ic_videogame, "Game").setActiveColor(Color.YELLOW))
             .setFirstSelectedPosition(DEFAULT_FRAGMENT_INDEX)
             .initialise();
 
@@ -62,17 +66,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDefaultFragment() {
+        currentPos = DEFAULT_FRAGMENT_INDEX;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager. beginTransaction();
-        transaction.replace(R.id.fragment_container, mFragments.get(DEFAULT_FRAGMENT_INDEX)).commit();
+        transaction.add(R.id.fragment_container, mFragments.get(DEFAULT_FRAGMENT_INDEX)).commit();
     }
 
     @Override
     public void onTabSelected(int position) {
         LogUtils.d(TAG, "onTabSelected:" + position);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager. beginTransaction();
-        transaction.replace(R.id.fragment_container, mFragments.get(position)).commit();
+        if (currentPos != position) {
+            FragmentTransaction transaction = getFragmentManager(). beginTransaction();
+            Fragment fragment = mFragments.get(position);
+            if (!fragment.isAdded()) {
+                transaction.hide(mFragments.get(currentPos))
+                        .add(R.id.fragment_container, fragment).commit();
+            } else {
+                transaction.hide(mFragments.get(currentPos))
+                        .show(fragment).commit();
+            }
+            currentPos = position;
+        }
     }
 
     @Override
