@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/category_head"
+        layout="@layout/view_bookstore_category_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/category_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/first"
+            layout="@layout/view_book_item"/>
+
+        <include
+            android:id="@+id/second"
+            layout="@layout/view_book_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/first"
+            android:layout_marginTop="15dp"/>
+
+        <include
+            android:id="@+id/third"
+            layout="@layout/view_book_simple_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/second"
+            android:layout_marginTop="26dp"/>
+
+        <include
+            android:id="@+id/forth"
+            layout="@layout/view_book_simple_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/third"
+            android:layout_centerHorizontal="true"/>
+
+        <include
+            android:id="@+id/fifth"
+            layout="@layout/view_book_simple_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/forth"
+            android:layout_marginEnd="25dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+

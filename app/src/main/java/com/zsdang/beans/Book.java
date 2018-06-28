@@ -12,9 +12,12 @@ import java.util.LinkedHashMap;
 
 public class Book implements Parcelable {
 
+    private String mId;
     private String mName;
+    private String mAuthor;
+    private String mImg;
     private String mUrl;
-    private String mIntroduction;
+    private String mDesc;
     private HashMap<String, String> mChapters;
 
     public Book() {
@@ -27,6 +30,15 @@ public class Book implements Parcelable {
         mUrl = url;
     }
 
+    public Book(String id, String name, String author, String img, String desc) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+    }
+
     public String getName() {
         return mName;
     }
@@ -36,11 +48,15 @@ public class Book implements Parcelable {
     }
 
     public void setIntroduction(String introduction) {
-        mIntroduction = introduction;
+        mDesc = introduction;
     }
 
-    public String getIntroduction() {
-        return mIntroduction;
+    public String getAuthor() {
+        return mAuthor;
+    }
+
+    public String getDesc() {
+        return mDesc;
     }
 
     public void setChapters(LinkedHashMap<String, String> chapters) {
@@ -60,7 +76,7 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mName);
         dest.writeString(mUrl);
-        dest.writeString(mIntroduction);
+        dest.writeString(mDesc);
         dest.writeMap(mChapters);
     }
 
@@ -79,7 +95,7 @@ public class Book implements Parcelable {
     protected Book(Parcel source) {
         mName = source.readString();
         mUrl = source.readString();
-        mIntroduction = source.readString();
+        mDesc = source.readString();
         mChapters = source.readHashMap(HashMap.class.getClassLoader());
     }
 }

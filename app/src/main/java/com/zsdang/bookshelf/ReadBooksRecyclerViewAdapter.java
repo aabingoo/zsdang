@@ -73,7 +73,7 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             return new ReadingBookItem(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.view_bookshelf_read, parent, false);
+                    R.layout.view_bookshelf_read_item, parent, false);
             return new ReadBookItem(view);
         }
     }

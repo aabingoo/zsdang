@@ -1,13 +1,13 @@
 package com.zsdang.data.web.server;
 
+import android.text.TextUtils;
+
 import com.zsdang.LogUtils;
-import com.zsdang.beans.Book;
-import com.zsdang.data.web.IDataRequest;
+import com.zsdang.data.web.DataRequestCallback;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,15 +41,16 @@ public class DataServiceManager {
 
     }
 
-    public void queryBookDetial(String bookId, final IDataRequest callback) {
+    public void queryBookDetial(String bookId, final DataRequestCallback callback) {
         LogUtils.d(TAG, "queryBookDetial");
         request(HOST + BOOK_DETAIL + bookId + HTML_SUFFIX, callback);
     }
 
-    public void queryBookstore(final IDataRequest callback) {
+    public void queryBookstore(final DataRequestCallback callback) {
+        // TODO: check the network status
         LogUtils.d(TAG, "queryBookstore");
         Request request = new Request.Builder()
-                .url(HOST + MAN_CHANNEL)
+                .url(HOST + MAN_CHANNEL + HTML_SUFFIX)
                 .build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -69,15 +70,23 @@ public class DataServiceManager {
                     }
                     return;
                 }
-                LogUtils.d(TAG, "queryBookstore - onResponse:" + response.body().string());
+                boolean status = false;
+                String result = response.body().string();
                 try {
-                    JSONObject pageJson = new JSONObject(response.body().string());
-                    if (callback != null) {
-                        callback.onSuccess();
+                    if (!TextUtils.isEmpty(result)) {
+                        JSONObject pageJson = new JSONObject(result);
+                        if (pageJson.getInt("status") == 1
+                                && pageJson.getString("info").equals("success")) {
+                            status = true;
+                        }
                     }
                 } catch (Exception e) {
                     LogUtils.d(TAG, "Exception on queryBookstore.");
-                    if (callback != null) {
+                }
+                if (callback != null) {
+                    if (status) {
+                        callback.onSuccess(result);
+                    } else {
                         callback.onFailure();
                     }
                 }
@@ -85,7 +94,7 @@ public class DataServiceManager {
         });
     }
 
-    public void request(String url, final IDataRequest callback) {
+    public void request(String url, final DataRequestCallback callback) {
         LogUtils.d(TAG, "request");
         Request request = new Request.Builder()
                 .url(url)
@@ -108,10 +117,10 @@ public class DataServiceManager {
                     }
                     return;
                 }
-                LogUtils.d(TAG, "request - onResponse:" + response.body().string());
-                if (callback != null) {
-                    callback.onSuccess();
-                }
+//                LogUtils.d(TAG, "request - onResponse:" + response.body().string());
+//                if (callback != null) {
+//                    callback.onSuccess();
+//                }
 
 
 
