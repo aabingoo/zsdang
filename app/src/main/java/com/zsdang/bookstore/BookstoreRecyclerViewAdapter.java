@@ -128,7 +128,8 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
 
         public void updateView(List<Book> books) {
-            for (int i = 0; i < categoryBody.getChildCount() && i < books.size(); i++) {
+            for (int i = 0; i < categoryBody.getChildCount()
+                    && books!= null && i < books.size(); i++) {
                 Book book = books.get(i);
                 View bookItemView = categoryBody.getChildAt(i);
                 TextView bookName = bookItemView.findViewById(R.id.book_name);

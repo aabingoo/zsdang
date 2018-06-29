@@ -19,7 +19,9 @@ import android.widget.Button;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
+import com.zsdang.bookcatalog.BookCatalogActivity;
 import com.zsdang.bookdetail.BookDetailActivity;
+import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksProvider;
 
 import java.util.ArrayList;
@@ -158,7 +160,7 @@ public class BookShelfFragment extends Fragment {
         if (isAdded()) {
             Activity activity = getActivity();
             Intent intent = new Intent(activity, BookDetailActivity.class);
-            intent.putExtra("book", book);
+            intent.putExtra(GlobalConstant.EXTRA_BOOK, book);
             activity.startActivity(intent);
         }
     }

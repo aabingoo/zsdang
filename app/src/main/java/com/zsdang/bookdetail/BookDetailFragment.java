@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,13 @@ import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.bookshelf.RecyclerViewItemTouchHandler;
+import com.zsdang.data.GlobalConstant;
+import com.zsdang.data.web.DataRequestCallback;
+import com.zsdang.data.web.server.DataServiceManager;
 import com.zsdang.reading.ReadingActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,22 +36,25 @@ import java.util.List;
  * Created by BinyongSu on 2018/5/31.
  */
 
-public class BookDetailFragment extends Fragment {
+public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "BookDetailFragment";
 
     public static final String ARG_PARAM_BOOK = "book";
 
     private Book mBook;
+    private List<Book> mSimilarBooks;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<String> mChapterNameList = new ArrayList<>();
     private RecyclerView mBookDetailRv;
-    private BookDetailRvAdapter mBookDetailRvAdapter;
-    private View mLoadingView;
+    private BookDetailRecyclerViewAdapter mBookDetailRecyclerViewAdapter;
+    private Handler mHandler;
+//    private View mLoadingView;
 
     public static BookDetailFragment newInstance(Book book) {
         BookDetailFragment fragment = new BookDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM_BOOK, book);
+        args.putParcelable(GlobalConstant.EXTRA_BOOK, book);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +67,8 @@ public class BookDetailFragment extends Fragment {
         if (bundle != null) {
             mBook = bundle.getParcelable(ARG_PARAM_BOOK);
         }
+
+        mHandler = new Handler();
     }
 
     @Nullable
@@ -61,8 +76,11 @@ public class BookDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
         mBookDetailRv = rootView.findViewById(R.id.book_detail_rv);
-        mLoadingView = rootView.findViewById(R.id.loading_pb);
-        mLoadingView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+//        mLoadingView = rootView.findViewById(R.id.loading_pb);
+//        mLoadingView.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -74,73 +92,147 @@ public class BookDetailFragment extends Fragment {
 
         // Init RecyclerView and set its adapter
         mBookDetailRv.setLayoutManager(new LinearLayoutManager(activity));
-        mBookDetailRvAdapter = new BookDetailRvAdapter();
-        mBookDetailRv.setAdapter(mBookDetailRvAdapter);
-        mBookDetailRv.addOnItemTouchListener(new RecyclerViewItemTouchHandler(activity,
-                new RecyclerViewItemTouchHandler.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int pos) {
-                        LogUtils.d(TAG, "onItemClick:" + pos);
-                        if (mBook != null && mChapterNameList != null && pos < mChapterNameList.size()) {
-                            String chapterName = mChapterNameList.get(pos);
-                            String chapterUrl = mBook.getChapters().get(chapterName);
-                            String bookUrl = mBook.getUrl();
-                            if (!bookUrl.endsWith("/")) {
-                                bookUrl += "/";
-                            }
-                            int last = chapterUrl.lastIndexOf("/");
-                            if (last >= 0) {
-                                chapterUrl = chapterUrl.substring(last + 1);
-                            }
-                            chapterUrl = bookUrl + chapterUrl;
-                            LogUtils.d(TAG, "book url:" + bookUrl + "name:" + chapterName + " url:" + chapterUrl);
-                            enterReadingScreen(chapterName, chapterUrl);
-                        }
-                    }
+        mBookDetailRecyclerViewAdapter = new BookDetailRecyclerViewAdapter();
+        mBookDetailRv.setAdapter(mBookDetailRecyclerViewAdapter);
+//        mBookDetailRv.addOnItemTouchListener(new RecyclerViewItemTouchHandler(activity,
+//                new RecyclerViewItemTouchHandler.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int pos) {
+//                        LogUtils.d(TAG, "onItemClick:" + pos);
+//                        if (mBook != null && mChapterNameList != null && pos < mChapterNameList.size()) {
+//                            String chapterName = mChapterNameList.get(pos);
+//                            String chapterUrl = mBook.getChapters().get(chapterName);
+//                            String bookUrl = mBook.getUrl();
+//                            if (!bookUrl.endsWith("/")) {
+//                                bookUrl += "/";
+//                            }
+//                            int last = chapterUrl.lastIndexOf("/");
+//                            if (last >= 0) {
+//                                chapterUrl = chapterUrl.substring(last + 1);
+//                            }
+//                            chapterUrl = bookUrl + chapterUrl;
+//                            LogUtils.d(TAG, "book url:" + bookUrl + "name:" + chapterName + " url:" + chapterUrl);
+//                            enterReadingScreen(chapterName, chapterUrl);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onItemLongClick(View view, int pos) {
+//                        LogUtils.d(TAG, "onItemLongClick:" + pos);
+//                    }
+//                }));
 
-                    @Override
-                    public void onItemLongClick(View view, int pos) {
-                        LogUtils.d(TAG, "onItemLongClick:" + pos);
-                    }
-                }));
-
-        queryBookDetail();
+//        queryBookDetail();
+        loadBookDetail();
 
     }
 
-    private void enterReadingScreen(String chapterName, String chapterUrl) {
-        if (isAdded()) {
-            Activity activity = getActivity();
-            Intent intent = new Intent(activity, ReadingActivity.class);
-            intent.putExtra("chapter", new String[]{chapterName, chapterUrl});
-            activity.startActivity(intent);
-        }
-    }
+    private void loadBookDetail() {
 
-    public void queryBookDetail() {
-        DataBaseModel model = new DataBaseModel(getActivity());
-        model.queryWebBookDetail(mBook, new DataBaseModel.QueryBookDetailListener() {
+        if (mBook == null || TextUtils.isEmpty(mBook.getId())) return;
+
+        mSwipeRefreshLayout.setRefreshing(true);
+        DataServiceManager dataServiceManager = new DataServiceManager();
+        dataServiceManager.queryBookDetial(mBook.getId(), new DataRequestCallback() {
             @Override
-            public void queryDone(final LinkedHashMap<String, String> chapters) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        LogUtils.d("CrawlerTest", "queryWebBookDetail() chapters size:" + chapters.size());
-                        if (chapters != null && chapters.size() > 0) {
-                            mBook.setChapters(chapters);
-                            mChapterNameList.clear();
-                            mChapterNameList.addAll(chapters.keySet());
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mLoadingView.setVisibility(View.GONE);
-                                    mBookDetailRvAdapter.notifyDataSetChanged(mBook);
-                                }
-                            });
-                        }
-                    }
-                });
+            public void onFailure() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onSuccess(@NonNull String result) {
+                try {
+                    JSONObject pageJson = new JSONObject(result);
+                    JSONObject bookJson = pageJson.getJSONObject("data");
+                    mBook = getBook(bookJson);
+                    mSimilarBooks = getSimilarBooks(bookJson);
+
+                    mHandler.post(notofyAdapterRunnable);
+                } catch (Exception e) {
+                    LogUtils.d(TAG, "Exception on queryBookstore.");
+                }
             }
         });
     }
+
+    private Book getBook(JSONObject bookJson) {
+        Book book = new Book();
+        try{
+            book = new Book(bookJson.getString("Id"),
+                    bookJson.getString("Name"),
+                    bookJson.getString("Author"),
+                    bookJson.getString("Img"),
+                    bookJson.getString("Desc"));
+        } catch (Exception e) {
+            LogUtils.d(TAG, "Exception on queryBookstore.");
+        }
+        return book;
+    }
+
+    private List<Book> getSimilarBooks(JSONObject bookJson) {
+        List<Book> similarBooks = new ArrayList<>();
+        try {
+            JSONArray similarBooksJson = bookJson.getJSONArray("SameCategoryBooks");
+            for (int i = 0; i < similarBooksJson.length(); i++) {
+                JSONObject similarBookItem = similarBooksJson.getJSONObject(i);
+                Book book = new Book(similarBookItem.getString("Id"),
+                        similarBookItem.getString("Name"),
+                        similarBookItem.getString("Img"));
+                similarBooks.add(book);
+            }
+        } catch (Exception e) {
+            LogUtils.d(TAG, "Exception on queryBookstore.");
+        }
+        return similarBooks;
+    }
+
+    private Runnable notofyAdapterRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mSimilarBooks);
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    };
+
+    @Override
+    public void onRefresh() {
+        LogUtils.d(TAG, "onRefresh");
+        loadBookDetail();
+    }
+
+//    private void enterReadingScreen(String chapterName, String chapterUrl) {
+//        if (isAdded()) {
+//            Activity activity = getActivity();
+//            Intent intent = new Intent(activity, ReadingActivity.class);
+//            intent.putExtra("chapter", new String[]{chapterName, chapterUrl});
+//            activity.startActivity(intent);
+//        }
+//    }
+
+//    public void queryBookDetail() {
+//        DataBaseModel model = new DataBaseModel(getActivity());
+//        model.queryWebBookDetail(mBook, new DataBaseModel.QueryBookDetailListener() {
+//            @Override
+//            public void queryDone(final LinkedHashMap<String, String> chapters) {
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        LogUtils.d("CrawlerTest", "queryWebBookDetail() chapters size:" + chapters.size());
+//                        if (chapters != null && chapters.size() > 0) {
+//                            mBook.setChapters(chapters);
+//                            mChapterNameList.clear();
+//                            mChapterNameList.addAll(chapters.keySet());
+//                            getActivity().runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mLoadingView.setVisibility(View.GONE);
+//                                    mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook);
+//                                }
+//                            });
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//    }
 }

@@ -9,13 +9,14 @@ import android.support.v7.widget.RecyclerView;
 
 import com.zsdang.R;
 import com.zsdang.beans.Book;
+import com.zsdang.data.GlobalConstant;
 
 public class BookDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "BookDetailActivity";
 
     private RecyclerView mBookDetailRv;
-    private BookDetailRvAdapter mBookDetailRvAdapter;
+    private BookDetailRecyclerViewAdapter mBookDetailRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            Book book = intent.getParcelableExtra(BookDetailFragment.ARG_PARAM_BOOK);
+            Book book = intent.getParcelableExtra(GlobalConstant.EXTRA_BOOK);
             BookDetailFragment bookDetailFragment = BookDetailFragment.newInstance(book);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager. beginTransaction();

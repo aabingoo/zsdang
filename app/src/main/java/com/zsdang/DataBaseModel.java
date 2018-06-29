@@ -35,7 +35,7 @@ public class DataBaseModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = book.getUrl();
+                String url = book.getImg();
                 if (!TextUtils.isEmpty(url)) {
                     IWebCrawler crawler = new HtmlCrawler();
                     crawler.crawlerBookContent(url, new IWebCrawler.CrawlerBookContentListener() {

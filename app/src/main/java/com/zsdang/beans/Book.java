@@ -3,8 +3,10 @@ package com.zsdang.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by aabingoo on 2017/9/5.
@@ -16,18 +18,26 @@ public class Book implements Parcelable {
     private String mName;
     private String mAuthor;
     private String mImg;
-    private String mUrl;
     private String mDesc;
-    private HashMap<String, String> mChapters;
+    private List<String> mChapterIdList;
+    private List<String> mChapterTitleList;
 
     public Book() {
-        mChapters = new HashMap<>();
+        mChapterIdList = new ArrayList<>();
+        mChapterTitleList = new ArrayList<>();
     }
 
-    public Book(String name, String url) {
+    public Book(String name, String img) {
         this();
         mName = name;
-        mUrl = url;
+        mImg = img;
+    }
+
+    public Book(String id, String name, String img) {
+        this();
+        mId = id;
+        mName = name;
+        mImg = img;
     }
 
     public Book(String id, String name, String author, String img, String desc) {
@@ -39,16 +49,20 @@ public class Book implements Parcelable {
         mDesc = desc;
     }
 
+    public String getId() {
+        return mId;
+    }
+
     public String getName() {
         return mName;
     }
 
-    public String getUrl() {
-        return mUrl;
+    public String getImg() {
+        return mImg;
     }
 
-    public void setIntroduction(String introduction) {
-        mDesc = introduction;
+    public void setDesc(String desc) {
+        mDesc = desc;
     }
 
     public String getAuthor() {
@@ -59,12 +73,12 @@ public class Book implements Parcelable {
         return mDesc;
     }
 
-    public void setChapters(LinkedHashMap<String, String> chapters) {
-        mChapters = chapters;
+    public List<String> getChapterIdList() {
+        return mChapterIdList;
     }
 
-    public HashMap<String, String> getChapters() {
-        return mChapters;
+    public List<String> getChapterTitleList() {
+        return mChapterTitleList;
     }
 
     @Override
@@ -74,10 +88,13 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
         dest.writeString(mName);
-        dest.writeString(mUrl);
+        dest.writeString(mAuthor);
+        dest.writeString(mImg);
         dest.writeString(mDesc);
-        dest.writeMap(mChapters);
+        dest.writeStringList(mChapterIdList);
+        dest.writeStringList(mChapterTitleList);
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -93,9 +110,13 @@ public class Book implements Parcelable {
     };
 
     protected Book(Parcel source) {
+        this();
+        mId = source.readString();
         mName = source.readString();
-        mUrl = source.readString();
+        mAuthor = source.readString();
+        mImg = source.readString();
         mDesc = source.readString();
-        mChapters = source.readHashMap(HashMap.class.getClassLoader());
+        source.readStringList(mChapterIdList);
+        source.readStringList(mChapterTitleList);
     }
 }

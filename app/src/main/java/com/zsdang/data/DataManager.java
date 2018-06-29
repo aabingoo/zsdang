@@ -10,6 +10,7 @@ import com.zsdang.data.local.LocalBooksProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
 
@@ -52,7 +53,9 @@ public class DataManager {
 //                            + " BOOKS_COLUMN_URL:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_URL))
 //                            + " BOOKS_COLUMN_INTRODUCTION:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_INTRODUCTION))
 //                            + " BOOKS_COLUMN_LATEST_CHAPTER:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER)));
-                    books.add(new Book(cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_NAME)), cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_URL))));
+                    books.add(new Book(cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_ID)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_NAME)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_URL))));
                 } while (cursor.moveToNext());
             }
         }

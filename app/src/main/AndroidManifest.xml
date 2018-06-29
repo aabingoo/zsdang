@@ -28,6 +28,8 @@
             android:exported="true">
         </provider>
 
+        <activity android:name=".bookcatalog.BookCatalogActivity">
+        </activity>
     </application>
 
 </manifest>

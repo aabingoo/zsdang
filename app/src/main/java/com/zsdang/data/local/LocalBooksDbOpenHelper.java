@@ -27,7 +27,8 @@ public class LocalBooksDbOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create_table_sql = "CREATE TABLE " +  TABLE_NAME + "("
-                +  "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                +  "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                +  "id TEXT NOT NULL PRIMARY KEY,"
                 +  "name TEXT NOT NULL,"
                 +  "author TEXT NOT NULL,"
                 +  "url TEXT NOT NULL,"

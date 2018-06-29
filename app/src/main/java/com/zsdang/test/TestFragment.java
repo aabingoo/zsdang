@@ -116,6 +116,7 @@ public class TestFragment extends Fragment {
 
     public void insert() {
         ContentValues contentValues = new ContentValues();
+        contentValues.put(BOOKS_COLUMN_ID, "86745");
         contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
         contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
         contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + i++);
