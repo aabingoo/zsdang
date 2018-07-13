@@ -2,7 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="26dp"
+    android:layout_marginEnd="26dp">
 
     <ImageView
         android:id="@+id/book_cover"
@@ -16,8 +19,9 @@
         android:id="@+id/book_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/book_cover"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"/>
 
     <TextView
@@ -26,15 +30,18 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/book_name"
         android:layout_below="@+id/book_name"
+        android:layout_marginTop="8dp"
         android:text="TextView"/>
 
     <TextView
         android:id="@+id/book_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/boot_category"
+        android:layout_alignStart="@+id/book_name"
         android:layout_below="@+id/boot_category"
+        android:layout_marginTop="8dp"
         android:maxLines="2"
+        android:ellipsize="end"
         android:text="TextView"/>
 
 </RelativeLayout>

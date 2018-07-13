@@ -1,9 +1,9 @@
 package com.zsdang.bookdetail;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
@@ -11,7 +11,7 @@ import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.data.GlobalConstant;
 
-public class BookDetailActivity extends AppCompatActivity {
+public class BookDetailActivity extends Activity {
 
     private static final String TAG = "BookDetailActivity";
 

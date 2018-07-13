@@ -3,9 +3,9 @@ package com.zsdang.test;
 
 import android.app.Fragment;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +13,19 @@ import android.widget.Button;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
+import com.zsdang.bookdetail.BookDetailActivity;
+import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksDbOpenHelper;
 import com.zsdang.data.local.LocalBooksProvider;
 import com.zsdang.data.web.server.DataServiceManager;
+import com.zsdang.search.BookSearchActivity;
 
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_INTRODUCTION;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
-import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_IMG_NAME;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +44,7 @@ public class TestFragment extends Fragment {
             BOOKS_COLUMN_ID,
             BOOKS_COLUMN_NAME,
             BOOKS_COLUMN_AUTHOR,
-            BOOKS_COLUMN_URL,
+            BOOKS_COLUMN_IMG_NAME,
             BOOKS_COLUMN_INTRODUCTION,
             BOOKS_COLUMN_LATEST_CHAPTER};
 
@@ -84,7 +87,7 @@ public class TestFragment extends Fragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                delete();
             }
         });
 
@@ -110,16 +113,24 @@ public class TestFragment extends Fragment {
 //                manager.queryBookstore();
             }
         });
+
+        ((Button) rootView.findViewById(R.id.search)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public int i = 0;
 
     public void insert() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(BOOKS_COLUMN_ID, "86745");
+        contentValues.put(BOOKS_COLUMN_ID, i);
         contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
         contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
-        contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + i++);
+        contentValues.put(BOOKS_COLUMN_IMG_NAME, "http://asdf.com" + i++);
         getActivity().getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
     }
 
@@ -132,7 +143,7 @@ public class TestFragment extends Fragment {
                     LogUtils.d("Query", "BOOKS_COLUMN_ID:" + cursor.getInt(cursor.getColumnIndex(BOOKS_COLUMN_ID))
                             + " BOOKS_COLUMN_NAME:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_NAME))
                             + " BOOKS_COLUMN_AUTHOR:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_AUTHOR))
-                            + " BOOKS_COLUMN_URL:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_URL))
+                            + " BOOKS_COLUMN_IMG_NAME:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_IMG_NAME))
                             + " BOOKS_COLUMN_INTRODUCTION:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_INTRODUCTION))
                             + " BOOKS_COLUMN_LATEST_CHAPTER:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER)));
                 } while (cursor.moveToNext());
@@ -141,7 +152,7 @@ public class TestFragment extends Fragment {
     }
     public int deleteJ = 50;
     public void delete() {
-        getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, BOOKS_COLUMN_ID + "=" + deleteJ--, null);
+        getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, null, null);
     }
 
 }

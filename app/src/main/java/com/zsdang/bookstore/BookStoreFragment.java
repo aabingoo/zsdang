@@ -2,12 +2,12 @@ package com.zsdang.bookstore;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -73,7 +73,7 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
         final Activity activity = getActivity();
 
         // Init RecyclerView and set its adapter
-        mBookstoreRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        mBookstoreRecyclerView.setLayoutManager(new GridLayoutManager(activity, 12));
         mBookstoreRecyclerViewAdapter = new BookstoreRecyclerViewAdapter();
         mBookstoreRecyclerView.setAdapter(mBookstoreRecyclerViewAdapter);
 
@@ -107,19 +107,19 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
                         if (categoryTitle.equals("重磅推荐")) {
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 重磅推荐:" + bookList.length());
-                            mRecommendBooks = getTopFiveBooks(bookList);
+                            mRecommendBooks = getBooks(bookList);
                         } else if (categoryTitle.equals("火热新书")) {
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 火热新书:" + bookList.length());
-                            mNewBooks = getTopFiveBooks(bookList);
+                            mNewBooks = getBooks(bookList);
                         } else if (categoryTitle.equals("热门连载")) {
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 热门连载:" + bookList.length());
-                            mSerializeBooks = getTopFiveBooks(bookList);
+                            mSerializeBooks = getBooks(bookList);
                         } else if (categoryTitle.equals("完本精选")) {
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 完本精选:" + bookList.length());
-                            mEndBooks = getTopFiveBooks(bookList);
+                            mEndBooks = getBooks(bookList);
                         }
                     }
                     mHandler.post(notofyAdapterRunnable);
@@ -130,10 +130,10 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
         });
     }
 
-    public List<Book> getTopFiveBooks(JSONArray jsonArray) {
+    public List<Book> getBooks(JSONArray jsonArray) {
         List<Book> result = new ArrayList<>();
         try {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject bookItem = jsonArray.getJSONObject(i);
                 Book book = new Book(bookItem.getString("Id"),
                         bookItem.getString("Name"),

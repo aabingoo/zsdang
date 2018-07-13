@@ -9,17 +9,14 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
-import com.zsdang.bookcatalog.BookCatalogActivity;
 import com.zsdang.bookdetail.BookDetailActivity;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksProvider;
@@ -30,7 +27,7 @@ import java.util.List;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
-import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_URL;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_IMG_NAME;
 
 /**
  * Created by BinyongSu on 2018/5/31.
@@ -140,7 +137,7 @@ public class BookShelfFragment extends Fragment {
         ContentValues contentValues = new ContentValues();
         contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
         contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
-        contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + i++);
+        contentValues.put(BOOKS_COLUMN_IMG_NAME, "http://asdf.com" + i++);
         getActivity().getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
     }
     public int deleteJ = 50;
@@ -152,12 +149,13 @@ public class BookShelfFragment extends Fragment {
         ContentValues contentValues = new ContentValues();
         contentValues.put(BOOKS_COLUMN_NAME, "fanren" + updateI);
         contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + updateI);
-        contentValues.put(BOOKS_COLUMN_URL, "http://asdf.com" + updateI++);
+        contentValues.put(BOOKS_COLUMN_IMG_NAME, "http://asdf.com" + updateI++);
         getActivity().getContentResolver().update(LocalBooksProvider.CONTENT_URI, contentValues, BOOKS_COLUMN_ID + "=1", null);
     }
 
     private void enterBookDetail(Book book) {
         if (isAdded()) {
+            LogUtils.d(TAG, "bookid:" + book.getId());
             Activity activity = getActivity();
             Intent intent = new Intent(activity, BookDetailActivity.class);
             intent.putExtra(GlobalConstant.EXTRA_BOOK, book);

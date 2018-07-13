@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <include
         android:id="@+id/category_head"
-        layout="@layout/view_bookstore_category_head"
+        layout="@layout/view_category_title_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -18,7 +19,10 @@
 
         <include
             android:id="@+id/first"
-            layout="@layout/view_book_item"/>
+            layout="@layout/view_book_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
 
         <include
             android:id="@+id/second"
@@ -27,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/first"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="10dp"/>
 
         <include
             android:id="@+id/third"
@@ -36,24 +40,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/second"
-            android:layout_marginTop="26dp"/>
+            android:layout_marginTop="10dp"/>
 
         <include
             android:id="@+id/forth"
             layout="@layout/view_book_simple_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/third"
             android:layout_alignTop="@+id/third"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginStart="64dp"/>
 
         <include
             android:id="@+id/fifth"
             layout="@layout/view_book_simple_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/forth"
-            android:layout_marginEnd="25dp"/>
+            android:layout_toEndOf="@+id/forth"
+            android:layout_marginStart="64dp"/>
 
     </RelativeLayout>
 

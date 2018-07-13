@@ -28,6 +28,9 @@ public class DataServiceManager {
     public static final String BOOK_DETAIL = "info/";
     public static final String HOST_CATALOG = HOST + "book/%s/";
     public static final String HOST_CHAPTER = HOST + "book/%s/%s.html";
+    public static final String HOST_BOOK_COVER = HOST + "BookFiles/BookImages/%s";
+    public static final String HOST_BOOK_SEARCH = HOST + "/Search.aspx?isSearchPage=1&key=%s&page=%d";
+
 
     private OkHttpClient mOkHttpClient;
 
@@ -68,7 +71,13 @@ public class DataServiceManager {
         request(url, callback);
     }
 
-    public void request(String url, final DataRequestCallback callback) {
+    public void searchBooksByPage(String keyword, int pageNum, final DataRequestCallback callback) {
+        LogUtils.d(TAG, "searchBooksByPage");
+        String url = String.format(HOST_BOOK_SEARCH, keyword, pageNum);
+        request(url, callback);
+    }
+
+    private void request(String url, final DataRequestCallback callback) {
         LogUtils.d(TAG, "request");
         Request request = new Request.Builder()
                 .url(url)

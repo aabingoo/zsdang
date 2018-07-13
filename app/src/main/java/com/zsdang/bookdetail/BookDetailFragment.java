@@ -2,34 +2,29 @@ package com.zsdang.bookdetail;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zsdang.DataBaseModel;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
-import com.zsdang.bookshelf.RecyclerViewItemTouchHandler;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.web.DataRequestCallback;
 import com.zsdang.data.web.server.DataServiceManager;
-import com.zsdang.reading.ReadingActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -43,6 +38,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     public static final String ARG_PARAM_BOOK = "book";
 
     private Book mBook;
+    private List<Book> mOtherWrittenBooks;
     private List<Book> mSimilarBooks;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<String> mChapterNameList = new ArrayList<>();
@@ -55,6 +51,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
         BookDetailFragment fragment = new BookDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(GlobalConstant.EXTRA_BOOK, book);
+        LogUtils.d(TAG, "book id:" + book.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +62,8 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mBook = bundle.getParcelable(ARG_PARAM_BOOK);
+            mBook = bundle.getParcelable(GlobalConstant.EXTRA_BOOK);
+            LogUtils.d(TAG, "mBook id:" + mBook.getId());
         }
 
         mHandler = new Handler();
@@ -91,7 +89,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
         final Activity activity = getActivity();
 
         // Init RecyclerView and set its adapter
-        mBookDetailRv.setLayoutManager(new LinearLayoutManager(activity));
+        mBookDetailRv.setLayoutManager(new GridLayoutManager(activity, 3));
         mBookDetailRecyclerViewAdapter = new BookDetailRecyclerViewAdapter();
         mBookDetailRv.setAdapter(mBookDetailRecyclerViewAdapter);
 //        mBookDetailRv.addOnItemTouchListener(new RecyclerViewItemTouchHandler(activity,
@@ -145,6 +143,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                     JSONObject pageJson = new JSONObject(result);
                     JSONObject bookJson = pageJson.getJSONObject("data");
                     mBook = getBook(bookJson);
+                    mOtherWrittenBooks = getOtherWrittenBooks(bookJson);
                     mSimilarBooks = getSimilarBooks(bookJson);
 
                     mHandler.post(notofyAdapterRunnable);
@@ -162,11 +161,31 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                     bookJson.getString("Name"),
                     bookJson.getString("Author"),
                     bookJson.getString("Img"),
-                    bookJson.getString("Desc"));
+                    bookJson.getString("Desc"),
+                    bookJson.getString("LastChapterId"),
+                    bookJson.getString("LastChapter"));
         } catch (Exception e) {
             LogUtils.d(TAG, "Exception on queryBookstore.");
         }
         return book;
+    }
+
+    private List<Book> getOtherWrittenBooks(JSONObject bookJson) {
+        List<Book> otherWrittenBooks = new ArrayList<>();
+        try {
+            JSONArray similarBooksJson = bookJson.getJSONArray("SameUserBooks");
+            for (int i = 0; i < similarBooksJson.length(); i++) {
+                JSONObject similarBookItem = similarBooksJson.getJSONObject(i);
+                Book book = new Book(similarBookItem.getString("Id"),
+                        similarBookItem.getString("Name"),
+                        similarBookItem.getString("Img"));
+                book.setLaestChapterName(similarBookItem.getString("LastChapter"));
+                otherWrittenBooks.add(book);
+            }
+        } catch (Exception e) {
+            LogUtils.d(TAG, "Exception at getOtherWrittenBooks.");
+        }
+        return otherWrittenBooks;
     }
 
     private List<Book> getSimilarBooks(JSONObject bookJson) {
@@ -181,7 +200,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                 similarBooks.add(book);
             }
         } catch (Exception e) {
-            LogUtils.d(TAG, "Exception on queryBookstore.");
+            LogUtils.d(TAG, "Exception at getSimilarBooks.");
         }
         return similarBooks;
     }
@@ -189,7 +208,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     private Runnable notofyAdapterRunnable = new Runnable() {
         @Override
         public void run() {
-            mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mSimilarBooks);
+            mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mOtherWrittenBooks, mSimilarBooks);
             mSwipeRefreshLayout.setRefreshing(false);
         }
     };

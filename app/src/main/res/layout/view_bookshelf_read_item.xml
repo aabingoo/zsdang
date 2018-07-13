@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="12dp">
 
     <ImageView
         android:id="@+id/read_book_cover"
@@ -14,17 +16,23 @@
 
     <TextView
         android:id="@+id/read_book_name"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/read_book_cover"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="TextView"/>
 
     <TextView
         android:id="@+id/read_book_latest_chapter"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/read_book_name"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:text="TextView"/>
 
 </RelativeLayout>

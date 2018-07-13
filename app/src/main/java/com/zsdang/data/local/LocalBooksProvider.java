@@ -68,6 +68,7 @@ public class LocalBooksProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        LogUtils.d(TAG, "oncreate");
         mLocalBooksDbOpenHelper = new LocalBooksDbOpenHelper(getContext());
         if (mLocalBooksDbOpenHelper != null) {
             return true;
@@ -79,7 +80,13 @@ public class LocalBooksProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         mSQLiteDatabase = mLocalBooksDbOpenHelper.getReadableDatabase();
-        return mSQLiteDatabase.query(LocalBooksDbOpenHelper.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = null;
+        try {
+            cursor = mSQLiteDatabase.query(LocalBooksDbOpenHelper.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        } catch (Exception e) {
+            mLocalBooksDbOpenHelper.onUpgrade(mLocalBooksDbOpenHelper.getWritableDatabase(), 0, 1);
+        }
+        return cursor;
     }
 
     @Override

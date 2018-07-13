@@ -21,6 +21,8 @@ public class Book implements Parcelable {
     private String mDesc;
     private List<String> mChapterIdList;
     private List<String> mChapterTitleList;
+    private String mLaestChapterId;
+    private String mLaestChapterName;
 
     public Book() {
         mChapterIdList = new ArrayList<>();
@@ -47,6 +49,18 @@ public class Book implements Parcelable {
         mAuthor = author;
         mImg = img;
         mDesc = desc;
+    }
+
+    public Book(String id, String name, String author, String img, String desc,
+                String laestChapterId, String laestChapterName) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mLaestChapterId = laestChapterId;
+        mLaestChapterName = laestChapterName;
     }
 
     public String getId() {
@@ -79,6 +93,18 @@ public class Book implements Parcelable {
 
     public List<String> getChapterTitleList() {
         return mChapterTitleList;
+    }
+
+    public String getLaestChapterId() {
+        return mLaestChapterId;
+    }
+
+    public String getLaestChapterName() {
+        return mLaestChapterName;
+    }
+
+    public void setLaestChapterName(String laestChapterName) {
+        mLaestChapterName = laestChapterName;
     }
 
     @Override

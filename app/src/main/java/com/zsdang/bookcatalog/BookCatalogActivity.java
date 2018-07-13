@@ -1,10 +1,10 @@
 package com.zsdang.bookcatalog;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BookCatalogActivity extends AppCompatActivity
+public class BookCatalogActivity extends Activity
         implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "BookCatalogActivity";
@@ -63,7 +63,7 @@ public class BookCatalogActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String chapterId = mChapterIdList.get(position);
+        String chapterId = mChapterIdList.get(mChapterIdList.size() - position - 1);
         Intent intent = new Intent(this, ReadingActivity.class);
         intent.putExtra(GlobalConstant.EXTRA_BOOK_ID, mBook.getId());
         intent.putExtra(GlobalConstant.EXTRA_CHAPTER_ID, chapterId);

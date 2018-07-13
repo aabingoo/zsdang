@@ -2,6 +2,7 @@ package com.zsdang.bookshelf;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.database.ContentObserver;
 import android.os.Handler;
 
@@ -31,8 +32,8 @@ public class ReadBooksLoader extends AsyncTaskLoader<List<Book>> {
 
     @Override
     protected void onStartLoading() {
-        LogUtils.d(TAG, "onStartLoading - "
-                + " takeContentChanged():" + takeContentChanged() + " mBooks == null:" + (mBooks == null));
+        LogUtils.d(TAG, "onStartLoading - mBooks == null:" + (mBooks == null));
+
         if (mBooks != null) {
             deliverResult(mBooks);
         }

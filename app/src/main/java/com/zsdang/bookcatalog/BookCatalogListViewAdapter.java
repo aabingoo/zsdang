@@ -38,7 +38,7 @@ public class BookCatalogListViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mChapters.get(position);
+        return mChapters.get(mChapters.size() - position - 1);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class BookCatalogListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.chapterTitleTV.setText(mChapters.get(position));
+        viewHolder.chapterTitleTV.setText(mChapters.get(mChapters.size() - position - 1));
 
         return convertView;
     }
