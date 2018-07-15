@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/read_book_cover"
-        android:layout_width="70dp"
-        android:layout_height="96dp"
+        android:layout_width="@dimen/book_cover_width"
+        android:layout_height="@dimen/book_cover_height"
+        android:scaleType="fitXY"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/colorAccent"/>
@@ -31,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/read_book_name"
         android:textSize="12sp"
-        android:maxLines="2"
+        android:maxLines="1"
         android:ellipsize="end"
         android:text="TextView"/>
 

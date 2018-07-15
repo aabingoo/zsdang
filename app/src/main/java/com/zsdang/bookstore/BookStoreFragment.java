@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import java.util.List;
 public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "BookStoreFragment";
+
+    private Toolbar mToolbar;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -59,6 +62,8 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_book_store, container, false);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);

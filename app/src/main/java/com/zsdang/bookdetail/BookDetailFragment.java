@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
 
     public static final String ARG_PARAM_BOOK = "book";
 
+    private Toolbar mToolbar;
     private Book mBook;
     private List<Book> mOtherWrittenBooks;
     private List<Book> mSimilarBooks;
@@ -73,6 +75,8 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
         mBookDetailRv = rootView.findViewById(R.id.book_detail_rv);
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -146,7 +150,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                     mOtherWrittenBooks = getOtherWrittenBooks(bookJson);
                     mSimilarBooks = getSimilarBooks(bookJson);
 
-                    mHandler.post(notofyAdapterRunnable);
+                    mHandler.post(notifyAdapterRunnable);
                 } catch (Exception e) {
                     LogUtils.d(TAG, "Exception on queryBookstore.");
                 }
@@ -205,7 +209,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
         return similarBooks;
     }
 
-    private Runnable notofyAdapterRunnable = new Runnable() {
+    private Runnable notifyAdapterRunnable = new Runnable() {
         @Override
         public void run() {
             mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mOtherWrittenBooks, mSimilarBooks);

@@ -11,8 +11,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.Toolbar;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
@@ -20,6 +22,7 @@ import com.zsdang.beans.Book;
 import com.zsdang.bookdetail.BookDetailActivity;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksProvider;
+import com.zsdang.search.BookSearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +36,11 @@ import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_IMG_NAME
  * Created by BinyongSu on 2018/5/31.
  */
 
-public class BookShelfFragment extends Fragment {
+public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemClickListener{
 
     private static final String TAG = "BookShelfFragment";
 
+    private Toolbar mToolbar;
     private RecyclerView mReadBooksRecyclerView;
     private ReadBooksRecyclerViewAdapter mReadBooksRecyclerViewAdapter;
     private List<Book> mBooks;
@@ -60,8 +64,24 @@ public class BookShelfFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_shelf, container, false);
         mReadBooksRecyclerView = rootView.findViewById(R.id.read_books_rv);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
+        mToolbar.setOnMenuItemClickListener(this);
         return rootView;
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.search_item:
+                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+        return false;
     }
 
     @Override
@@ -81,7 +101,7 @@ public class BookShelfFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int pos) {
                         LogUtils.d(TAG, "onItemClick:" + pos);
-                        if (mBooks != null && pos < mBooks.size()) {
+                        if (mBooks != null && 0 < pos && pos < mBooks.size()) {
                             enterBookDetail(mBooks.get(pos));
                         }
                     }

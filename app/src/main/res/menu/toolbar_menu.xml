@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".search.BookSearchActivity">
+
+    <item
+        android:id="@+id/search_item"
+        android:title="搜索"
+        android:orderInCategory="60"
+        android:icon="@mipmap/search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/add_item"
+        android:title="添加"
+        android:orderInCategory="60"
+        android:icon="@mipmap/add"
+        app:showAsAction="always" />
+
+</menu>

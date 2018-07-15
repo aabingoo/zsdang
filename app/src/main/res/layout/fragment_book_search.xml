@@ -11,15 +11,16 @@
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/color_theam"
+        android:fitsSystemWindows="true">
 
-        <SearchView
+        <android.support.v7.widget.SearchView
             android:id="@+id/sv_book_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:imeOptions="actionSearch"
-            android:queryHint="搜索"
-            android:iconifiedByDefault="false"/>
+            app:queryHint="搜索"
+            app:iconifiedByDefault="false"/>
 
     </android.support.v7.widget.Toolbar>
 

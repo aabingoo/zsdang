@@ -8,40 +8,49 @@
     android:layout_marginEnd="26dp">
 
     <ImageView
-        android:id="@+id/book_cover"
-        android:layout_width="@dimen/book_cover_width"
-        android:layout_height="@dimen/book_cover_height"
+        android:id="@+id/im_book_cover"
+        android:layout_width="70dp"
+        android:layout_height="96dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="fitXY"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
-        android:id="@+id/book_name"
+        android:id="@+id/tv_book_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/book_cover"
+        android:layout_toEndOf="@+id/im_book_cover"
         android:layout_marginStart="18dp"
         android:layout_marginTop="4dp"
         android:text="TextView"/>
 
     <TextView
-        android:id="@+id/boot_category"
+        android:id="@+id/tv_book_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/book_name"
-        android:layout_below="@+id/book_name"
+        android:layout_alignStart="@+id/tv_book_name"
+        android:layout_below="@+id/tv_book_name"
         android:layout_marginTop="8dp"
         android:text="TextView"/>
 
     <TextView
-        android:id="@+id/book_desc"
+        android:id="@+id/tv_book_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/book_name"
-        android:layout_below="@+id/boot_category"
+        android:layout_alignStart="@+id/tv_book_name"
+        android:layout_below="@+id/tv_book_author"
         android:layout_marginTop="8dp"
         android:maxLines="2"
         android:ellipsize="end"
         android:text="TextView"/>
+
+    <Button
+        android:id="@+id/btn_add_to_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:text="加入书架" />
 
 </RelativeLayout>

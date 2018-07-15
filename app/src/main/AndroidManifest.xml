@@ -11,15 +11,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".bookdetail.BookDetailActivity"/>
-        <activity android:name=".reading.ReadingActivity"/>
+
+        <activity
+            android:name=".bookdetail.BookDetailActivity"/>
+
+        <activity
+            android:name=".reading.ReadingActivity"/>
+
+        <activity
+            android:name=".bookcatalog.BookCatalogActivity" />
+
+        <activity
+            android:name=".search.BookSearchActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <provider
             android:name=".data.local.LocalBooksProvider"
@@ -28,12 +41,6 @@
             android:exported="true">
         </provider>
 
-        <activity android:name=".bookcatalog.BookCatalogActivity">
-        </activity>
-        <activity
-            android:name=".search.BookSearchActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
     </application>
 
 </manifest>

@@ -4,4 +4,7 @@
     <dimen name="book_detail_item_text_size">16sp</dimen>
 
     <dimen name="reading_text_size">18sp</dimen>
+
+    <dimen name="book_cover_width">81dp</dimen>
+    <dimen name="book_cover_height">108dp</dimen>
 </resources>

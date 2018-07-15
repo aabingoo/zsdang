@@ -3,6 +3,7 @@ package com.zsdang.my;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ public class MyFragment extends Fragment {
 
     private static final String TAG = "MyFragment";
 
+    private Toolbar mToolbar;
+
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
         return fragment;
@@ -25,7 +28,10 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_my, container, false);
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
+        return rootView;
     }
 
 }
