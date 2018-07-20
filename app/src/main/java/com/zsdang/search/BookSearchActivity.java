@@ -7,11 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import com.zsdang.R;
+import com.zsdang.Utils;
 
 public class BookSearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Utils.setStatusBarTransparent(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_search);
 

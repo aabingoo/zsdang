@@ -8,12 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.zsdang.ImageLoader;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
@@ -21,7 +19,8 @@ import com.zsdang.beans.Book;
 import com.zsdang.bookcatalog.BookCatalogActivity;
 import com.zsdang.data.DataManager;
 import com.zsdang.data.GlobalConstant;
-import com.zsdang.data.web.server.DataServiceManager;
+import com.zsdang.reading.ReadingActivity;
+import com.zsdang.view.ExpandableTextView;
 
 import java.util.List;
 
@@ -128,7 +127,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         switch (viewType) {
             case VIEW_TYPE_CHECKED_BOOK:
                 view = LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.view_bookdetail_body, parent, false);
+                        R.layout.view_bookdetail_checked_book_item, parent, false);
                 return new BookDetailItem(parent.getContext(), view);
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS:
                 view = LayoutInflater.from(parent.getContext()).inflate(
@@ -161,6 +160,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS:
                 WrittenBookItem writtenBookItem = (WrittenBookItem) holder;
                 int writtenBookPos = position - (getCheckedBookNum() + 1);
+                LogUtils.d("suby1", "writtenBookPos:" + writtenBookPos);
                 writtenBookItem.updateView(mOtherWrittenBooks.get(writtenBookPos));
                 break;
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS_EXPAND:
@@ -169,6 +169,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 break;
             case VIEW_TYPE_SIMILAR_BOOKS:
                 SimilarBookItem similarBookItem = (SimilarBookItem) holder;
+                LogUtils.d("suby1", "similarBookItem:" + similarBookItem);
                 int similarBookPos = position - (getOtherWrittenBooksExpandPos() + 2);
                 similarBookItem.updateView(mSimilarBooks.get(similarBookPos));
                 break;
@@ -198,48 +199,80 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private class BookDetailItem extends RecyclerView.ViewHolder {
 
         private Context inContext;
+
         private ImageView bookCover;
         private TextView bookName;
         private TextView bookAuthor;
-        private TextView bookDesc;
+        private ExpandableTextView bookDesc;
         private TextView bookLatestChapter;
-        private TextView bookCatalog;
-        private Button addToBookshelf;
+
+        private LinearLayout toolsNavigationLl;
+        private int[] toolsNavigationImgArray;
+        private String[] toolsNavigationTitleArray;
 
         public BookDetailItem(Context context, View itemView) {
             super(itemView);
             inContext = context;
             bookCover = itemView.findViewById(R.id.book_cover);
             bookName = itemView.findViewById(R.id.book_name);
-            bookAuthor = itemView.findViewById(R.id.book_author);
+            bookAuthor = itemView.findViewById(R.id.book_category_and_author);
             bookDesc = itemView.findViewById(R.id.book_desc);
             bookLatestChapter = itemView.findViewById(R.id.book_latest_chapter);
-            bookCatalog = itemView.findViewById(R.id.book_catalog);
-            addToBookshelf = itemView.findViewById(R.id.add_to_bookshelf_btn);
+            toolsNavigationLl = itemView.findViewById(R.id.ll_tools_navigation);
+            toolsNavigationTitleArray = inContext.getResources().getStringArray(R.array.bookdetail_tools_navigation_title_array);
         }
 
         public void updateView(final Book book) {
             if (book != null) {
-                String imgUrl = String.format(DataServiceManager.HOST_BOOK_COVER, book.getImg());
-                Glide.with(inContext).load(imgUrl).into(bookCover);
-                bookName.setText(book.getName());
-                bookAuthor.setText(book.getAuthor());
-                bookDesc.setText(book.getDesc());
-                bookLatestChapter.setText(book.getLaestChapterName());
-                bookCatalog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(inContext, BookCatalogActivity.class);
-                        intent.putExtra(GlobalConstant.EXTRA_BOOK, book);
-                        inContext.startActivity(intent);
-                    }
-                });
+                // book cover
+                ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
 
-                addToBookshelf.setOnClickListener(new View.OnClickListener() {
+                // book name
+                bookName.setText(book.getName());
+
+                // book author
+                bookAuthor.setText(book.getAuthor());
+
+                // tools navigation
+                for (int i = 0; i < toolsNavigationLl.getChildCount(); i++) {
+                    View childView = toolsNavigationLl.getChildAt(i);
+                    ImageView toolImg = childView.findViewById(R.id.navication_img);
+                    TextView toolTitle = childView.findViewById(R.id.navication_title);
+                    toolTitle.setText(toolsNavigationTitleArray[i]);
+
+                    childView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            switch (view.getId()) {
+                                case R.id.start_read:
+                                    break;
+                                case R.id.add_to_bookshelf:
+                                    DataManager dataManager = new DataManager(inContext);
+                                    dataManager.addToBookshelf(book);
+                                    break;
+                                case R.id.complete_catalog:
+                                    Intent intent = new Intent(inContext, BookCatalogActivity.class);
+                                    intent.putExtra(GlobalConstant.EXTRA_BOOK, book);
+                                    inContext.startActivity(intent);
+                                    break;
+                                case R.id.cache_book:
+                            }
+                        }
+                    });
+                }
+
+                // book desc
+                bookDesc.setText(book.getDesc());
+
+                // book latest chapter
+                bookLatestChapter.setText(book.getLaestChapterName() + " >");
+                bookLatestChapter.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        DataManager dataManager = new DataManager(inContext);
-                        dataManager.addToBookshelf(book);
+                    public void onClick(View view) {
+                        Intent intent = new Intent(inContext, ReadingActivity.class);
+                        intent.putExtra(GlobalConstant.EXTRA_BOOK_ID, book.getId());
+                        intent.putExtra(GlobalConstant.EXTRA_CHAPTER_ID, book.getLaestChapterId());
+                        inContext.startActivity(intent);
                     }
                 });
             }
@@ -271,8 +304,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         public void updateView(Book book) {
             if (book != null) {
-                String imgUrl = String.format(DataServiceManager.HOST_BOOK_COVER, book.getImg());
-                ImageLoader.loadImgInto(inContext, imgUrl, bookCover);
+                ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
 
                 bookName.setText(book.getName());
             }
@@ -295,8 +327,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         public void updateView(Book book) {
             if (book != null) {
-                String imgUrl = String.format(DataServiceManager.HOST_BOOK_COVER, book.getImg());
-                ImageLoader.loadImgInto(inContext, imgUrl, bookCover);
+                ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
 
                 bookName.setText(book.getName());
             }

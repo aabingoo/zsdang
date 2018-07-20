@@ -158,6 +158,7 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 LogUtils.d(TAG, "img:" + book.getImg() + "  id:" + book.getId());
                 String imgUrl = String.format(DataServiceManager.HOST_BOOK_COVER, book.getImg());
                 Glide.with(inContext).load(imgUrl).into(bookCover);
+                bookCover.setForeground(inContext.getDrawable(R.drawable.select_bg));
                 bookNameTv.setText(book.getName());
                 latestChapterName.setText(book.getLaestChapterName());
 //                ImageLoader imageLoader = new ImageLoader(bookNameTv);

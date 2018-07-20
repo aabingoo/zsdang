@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.zsdang.R;
+import com.zsdang.Utils;
 import com.zsdang.beans.Book;
 import com.zsdang.data.GlobalConstant;
 
@@ -20,6 +21,8 @@ public class BookDetailActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Utils.setStatusBarTransparent(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detial);
 

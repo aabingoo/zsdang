@@ -3,16 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp">
+    android:layout_height="@dimen/reading_book_item_height"
+    android:background="@color/color_theam"
+    android:layout_marginBottom="@dimen/reading_book_bottom">
 
     <ImageView
         android:id="@+id/reading_book_cover"
-        android:layout_width="@dimen/book_cover_width"
-        android:layout_height="@dimen/book_cover_height"
+        android:layout_width="@dimen/reading_book_cover_width"
+        android:layout_height="@dimen/reading_book_cover_height"
         android:scaleType="fitXY"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="@dimen/reading_book_left"
         android:background="@color/colorAccent"/>
 
     <TextView
@@ -21,8 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/reading_book_cover"
         android:layout_toEndOf="@+id/reading_book_cover"
-        android:layout_marginStart="24dp"
-        android:text="TextView"/>
+        android:layout_marginStart="@dimen/reading_book_name_left"
+        android:textSize="@dimen/reading_book_text_size"
+        android:textColor="@color/color_white"/>
 
     <TextView
         android:id="@+id/reading_book_latest_chapter"
@@ -30,8 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/reading_book_name"
         android:layout_below="@+id/reading_book_name"
-        android:layout_marginTop="16dp"
-        android:text="TextView"/>
+        android:layout_marginTop="@dimen/reading_book_text_top"
+        android:textSize="@dimen/reading_book_text_size"
+        android:textColor="@color/color_white"/>
 
     <TextView
         android:id="@+id/reading_book_progress"
@@ -39,16 +43,20 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/reading_book_name"
         android:layout_below="@+id/reading_book_latest_chapter"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/reading_book_text_top"
+        android:textSize="@dimen/reading_book_text_size"
+        android:textColor="@color/color_white"
         android:text="10%"/>
 
     <TextView
         android:id="@+id/continue_reading"
-        android:layout_width="80dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/reading_book_continue_width"
+        android:layout_height="@dimen/reading_book_continue_height"
+        android:textSize="@dimen/reading_book_continue_text_size"
+        android:textColor="@color/color_white"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/reading_book_progress"
-        android:layout_marginEnd="45dp"
+        android:layout_alignBottom="@+id/reading_book_cover"
+        android:layout_marginEnd="@dimen/reading_book_left"
         android:background="@drawable/continue_reading_border"
         android:gravity="center"
         android:text="继续阅读"/>

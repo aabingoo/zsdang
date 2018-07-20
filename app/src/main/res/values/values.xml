@@ -3,8 +3,40 @@
     <dimen name="book_detail_item_height">48dp</dimen>
     <dimen name="book_detail_item_text_size">16sp</dimen>
 
-    <dimen name="reading_text_size">18sp</dimen>
+    <!--Read view-->
+    <dimen name="reading_text_size">16sp</dimen>
+
+
+    <!--Common-->
+    <dimen name="inner_item_margin_top">12dp</dimen>
+    <dimen name="inner_item_padding">16dp</dimen>
+
+    <!--Bookshelf-->
+    <dimen name="reading_book_item_height">160dp</dimen>
+    <dimen name="reading_book_left">24dp</dimen>
+    <dimen name="reading_book_name_left">20dp</dimen>
+    <dimen name="reading_book_text_size">16sp</dimen>
+    <dimen name="reading_book_text_top">24dp</dimen>
+    <dimen name="reading_book_continue_width">102dp</dimen>
+    <dimen name="reading_book_continue_height">32dp</dimen>
+    <dimen name="reading_book_continue_text_size">18sp</dimen>
+    <dimen name="reading_book_bottom">6dp</dimen>
+    <dimen name="reading_book_cover_width">99dp</dimen>
+    <dimen name="reading_book_cover_height">132dp</dimen>
+    <dimen name="read_book_top">12dp</dimen>
+    <dimen name="read_book_name_top">4dp</dimen>
+    <dimen name="read_book_cover_width">90dp</dimen>
+    <dimen name="read_book_cover_height">120dp</dimen>
+    <dimen name="read_book_latest_chapter_top">2dp</dimen>
+    <dimen name="read_book_name_text_size">13sp</dimen>
+    <dimen name="read_book_latest_chapter_text_size">11sp</dimen>
 
     <dimen name="book_cover_width">81dp</dimen>
     <dimen name="book_cover_height">108dp</dimen>
+
+    <!--Book Detail-->
+    <dimen name="bookdetail_checked_name_test_size">22sp</dimen>
+    <dimen name="bookdetail_checked_category_and_author_test_size">14sp</dimen>
+    <dimen name="bookdetail_checked_desc_test_size">16sp</dimen>
+    <dimen name="bookdetail_checked_book_latest_chapter_test_size">16sp</dimen>
 </resources>

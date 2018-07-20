@@ -3,7 +3,6 @@ package com.zsdang.test;
 
 import android.app.Fragment;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,12 +12,9 @@ import android.widget.Button;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
-import com.zsdang.bookdetail.BookDetailActivity;
-import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksDbOpenHelper;
 import com.zsdang.data.local.LocalBooksProvider;
-import com.zsdang.data.web.server.DataServiceManager;
-import com.zsdang.search.BookSearchActivity;
+import com.zsdang.view.ExpandableTextView;
 
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
@@ -39,6 +35,7 @@ public class TestFragment extends Fragment {
     private Button deleteBtn;
     private Button updateBtn;
     private Button updateDBBtn;
+    private ExpandableTextView mExpandableTextView;
 
     private String[] mProjection = new String[] {
             BOOKS_COLUMN_ID,
@@ -109,18 +106,27 @@ public class TestFragment extends Fragment {
         ((Button) rootView.findViewById(R.id.queryBookstore)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataServiceManager manager = new DataServiceManager();
+//                DataServiceManager manager = new DataServiceManager();
 //                manager.queryBookstore();
+                mExpandableTextView.setText("默认我们是设置成收起状态的，在收起状态时，我们设置当前行数为最大可显示行数，并且按钮显示出来默认我们是设且出来默认我们是设且出来默认我们是设且按钮显示出来");
             }
         });
+
+        mExpandableTextView = (ExpandableTextView) rootView.findViewById(R.id.expand_tv);
 
         ((Button) rootView.findViewById(R.id.search)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
+//                startActivity(intent);
+                mExpandableTextView.setText("aaaaa");
             }
         });
+
+//        tv.setText("默认我们是设置成收起状态的，在收起状态时，我们设置当前行数为最大可显示行数，并且按钮显示出来默认我们是设且出来默认我们是设且出来默认我们是设且按钮显示出来");
+//        tv.setText("默认");
+//        ExpandableTextView t2v = (ExpandableTextView) rootView.findViewById(R.id.expand_tv2);
+//        t2v.setText("aaa");
     }
 
     public int i = 0;

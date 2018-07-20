@@ -13,12 +13,14 @@ import android.widget.ListView;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
+import com.zsdang.data.DataUtils;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.web.DataRequestCallback;
 import com.zsdang.data.web.server.DataServiceManager;
 import com.zsdang.reading.ReadingActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -86,8 +88,11 @@ public class BookCatalogActivity extends Activity
 
             @Override
             public void onSuccess(@NonNull String result) {
+                LogUtils.d(TAG, "onSuccess - result:\n" + result);
                 try {
+//                    JSONArray jsonArray = new JSONArray(result);
                     JSONObject pageJson = new JSONObject(result);
+                    LogUtils.d(TAG, "  jo:" + pageJson.toString());
                     JSONObject bookJson = pageJson.getJSONObject("data");
                     getChaptersMap(bookJson, mChapterIdList, mChapterTitleList);
 
@@ -111,18 +116,18 @@ public class BookCatalogActivity extends Activity
         try {
             JSONArray volumeListJson = bookJson.getJSONArray("list");
             for (int i = 0; i < volumeListJson.length(); i++) {
-                JSONObject volumeJson = volumeListJson.getJSONObject(i);
-                JSONArray chapterListJson = volumeJson.getJSONArray("list");
+                JSONObject volumeJson = DataUtils.getJSONObjectFromJSONArray(volumeListJson, i);
+                JSONArray chapterListJson = DataUtils.getJSONArrayFromJSONObject(volumeJson, "list");
                 for (int j = 0; j < chapterListJson.length(); j++) {
-                    JSONObject chapterJson = chapterListJson.getJSONObject(j);
-                    if (chapterJson.getInt("hasContent") == 1) {
+                    JSONObject chapterJson = DataUtils.getJSONObjectFromJSONArray(chapterListJson, j);
+                    if (chapterJson != null && chapterJson.getInt("hasContent") == 1) {
                         idList.add(chapterJson.getString("id"));
                         titleList.add(chapterJson.getString("name"));
                     }
                 }
             }
         } catch (Exception e) {
-            LogUtils.d(TAG, "Exception on queryBookCatalog.");
+            LogUtils.d(TAG, "Exception on queryBookCatalog:" + e.toString());
         }
     }
 }

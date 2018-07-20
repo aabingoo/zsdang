@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandableTextViewAttrs">
+        <attr name="collapsed_line" format="integer" />
+        <attr name="isCollapsed" format="boolean" />
+        <attr name="expand_text_color" format="color"/>
+        <attr name="collpased_text_color" format="color"/>
+        <attr name="expand_text" format="string" />
+        <attr name="collpased_text" format="string" />
+    </declare-styleable>
+</resources>

@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/loading_pb"
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/reading_text_size"
-            android:padding="6dp"/>
+            android:padding="@dimen/inner_item_padding"/>
     </ScrollView>
 
 </LinearLayout>

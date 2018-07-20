@@ -62,13 +62,34 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_book_store, container, false);
-        mToolbar = rootView.findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
+//        mToolbar = rootView.findViewById(R.id.toolbar);
+//        mToolbar.setFitsSystemWindows(true);
+//        mToolbar.inflateMenu(R.menu.toolbar_menu);
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mBookstoreRecyclerView = rootView.findViewById(R.id.bookstore_rv);
         return rootView;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        LogUtils.d(TAG, "onHiddenChanged:" + hidden);
+//        if (hidden) {
+//            mToolbar.setFitsSystemWindows(false);
+//        } else {
+//            mToolbar.setFitsSystemWindows(true);
+//        }
+//        mToolbar.requestApplyInsets();
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtils.d(TAG, "onPause");
+//        mToolbar.setFitsSystemWindows(false);
+//        mToolbar.requestApplyInsets();
     }
 
     @Override

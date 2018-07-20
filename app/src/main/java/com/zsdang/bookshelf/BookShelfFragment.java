@@ -6,11 +6,15 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Loader;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +40,8 @@ import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_IMG_NAME
  * Created by BinyongSu on 2018/5/31.
  */
 
-public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemClickListener{
+public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemClickListener,
+        ActionMode.Callback {
 
     private static final String TAG = "BookShelfFragment";
 
@@ -64,11 +69,32 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_shelf, container, false);
         mReadBooksRecyclerView = rootView.findViewById(R.id.read_books_rv);
-        mToolbar = rootView.findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
-        mToolbar.setOnMenuItemClickListener(this);
+//        mToolbar = rootView.findViewById(R.id.toolbar);
+//        mToolbar.setFitsSystemWindows(true);
+//        mToolbar.inflateMenu(R.menu.toolbar_menu);
+//        mToolbar.setOnMenuItemClickListener(this);
         return rootView;
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        LogUtils.d(TAG, "onHiddenChanged:" + hidden);
+//        if (hidden) {
+//            mToolbar.setFitsSystemWindows(false);
+//        } else {
+//            mToolbar.setFitsSystemWindows(true);
+//        }
+//        mToolbar.requestApplyInsets();
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtils.d(TAG, "onPause");
+//        mToolbar.setFitsSystemWindows(false);
+//        mToolbar.requestApplyInsets();
     }
 
     @Override
@@ -109,6 +135,9 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
                     @Override
                     public void onItemLongClick(View view, int pos) {
                         LogUtils.d(TAG, "onItemLongClick:" + pos);
+                        if (mBooks != null && 0 < pos && pos < mBooks.size()) {
+                            enterActionMode();
+                        }
                     }
                 }));
 
@@ -181,5 +210,32 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
             intent.putExtra(GlobalConstant.EXTRA_BOOK, book);
             activity.startActivity(intent);
         }
+    }
+
+    private void enterActionMode() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.startActionMode(this);
+        }
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.getMenuInflater().inflate(R.menu.action_mode_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
     }
 }

@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="bookdetail_tools_navigation_title_array">
+        <item>开始阅读</item>
+        <item>加入书架</item>
+        <item>完整目录</item>
+        <item>缓存本书</item>
+        <item>移出书架</item>
+    </string-array>
+</resources>

@@ -6,17 +6,10 @@ xmlns:tools="http://schemas.android.com/tools"
 tools:context=".search.BookSearchActivity">
 
 <item
-    android:id="@+id/search_item"
+    android:id="@+id/delete_item"
     android:title="搜索"
     android:orderInCategory="60"
-    android:icon="@mipmap/ic_search_white"
-    app:showAsAction="always" />
-
-<item
-    android:id="@+id/add_item"
-    android:title="添加"
-    android:orderInCategory="60"
-    android:icon="@mipmap/ic_add_white"
+    android:icon="@mipmap/ic_delete_white"
     app:showAsAction="always" />
 
 </menu>
