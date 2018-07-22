@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onActionModeStarted(ActionMode mode) {
-        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_actionmode));
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_theam));
         mBottomNavigationBar.setVisibility(View.GONE);
         super.onActionModeStarted(mode);
     }

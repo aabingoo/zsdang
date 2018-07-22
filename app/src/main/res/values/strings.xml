@@ -3,4 +3,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Bookshelf-->
+    <string name="continue_reading">继续阅读</string>
+    <string name="reading_book_latest_chapter">最新章节:\n%1$s</string>
+    <string name="reading_book_progress">10% &lt;small&gt;已读&lt;/small&gt;</string>
+    <string name="action_mode_delete_select">删除所选 (%1$d)</string>
 </resources>

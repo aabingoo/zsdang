@@ -15,12 +15,14 @@
     <dimen name="reading_book_item_height">160dp</dimen>
     <dimen name="reading_book_left">24dp</dimen>
     <dimen name="reading_book_name_left">20dp</dimen>
-    <dimen name="reading_book_text_size">16sp</dimen>
-    <dimen name="reading_book_text_top">24dp</dimen>
+    <dimen name="reading_book_title_text_size">20sp</dimen>
+    <dimen name="reading_book_latest_chapter_text_size">12sp</dimen>
+    <dimen name="reading_book_progress_text_size">16sp</dimen>
+    <dimen name="reading_book_text_top">22dp</dimen>
     <dimen name="reading_book_continue_width">102dp</dimen>
     <dimen name="reading_book_continue_height">32dp</dimen>
     <dimen name="reading_book_continue_text_size">18sp</dimen>
-    <dimen name="reading_book_bottom">6dp</dimen>
+    <dimen name="reading_book_bottom">18dp</dimen>
     <dimen name="reading_book_cover_width">99dp</dimen>
     <dimen name="reading_book_cover_height">132dp</dimen>
     <dimen name="read_book_top">12dp</dimen>

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/read_books_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize">
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_action_mode_delete_select"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_white"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@android:color/holo_red_light" />
+
+</RelativeLayout>

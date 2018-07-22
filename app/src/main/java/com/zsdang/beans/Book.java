@@ -23,10 +23,12 @@ public class Book implements Parcelable {
     private List<String> mChapterTitleList;
     private String mLaestChapterId;
     private String mLaestChapterName;
+    private boolean mSelect;
 
     public Book() {
         mChapterIdList = new ArrayList<>();
         mChapterTitleList = new ArrayList<>();
+        mSelect = false;
     }
 
     public Book(String name, String img) {
@@ -105,6 +107,14 @@ public class Book implements Parcelable {
 
     public void setLaestChapterName(String laestChapterName) {
         mLaestChapterName = laestChapterName;
+    }
+
+    public boolean getSelect() {
+        return mSelect;
+    }
+
+    public void setSelect(boolean select) {
+        mSelect = select;
     }
 
     @Override

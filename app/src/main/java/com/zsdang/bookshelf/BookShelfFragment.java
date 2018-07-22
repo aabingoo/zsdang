@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.zsdang.LogUtils;
 import com.zsdang.R;
@@ -50,6 +51,10 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     private ReadBooksRecyclerViewAdapter mReadBooksRecyclerViewAdapter;
     private List<Book> mBooks;
 
+    private boolean mIsActionMode = false;
+    private TextView mActionModeDeleteSelect;
+    private int mSelectCnt = 0;
+
     // Callbacks for ReadBooksLoader
     private LoaderManager.LoaderCallbacks<List<Book>> mReadBooksCallbacks;
 
@@ -69,6 +74,13 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_shelf, container, false);
         mReadBooksRecyclerView = rootView.findViewById(R.id.read_books_rv);
+        mActionModeDeleteSelect = rootView.findViewById(R.id.tv_action_mode_delete_select);
+        mActionModeDeleteSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 //        mToolbar = rootView.findViewById(R.id.toolbar);
 //        mToolbar.setFitsSystemWindows(true);
 //        mToolbar.inflateMenu(R.menu.toolbar_menu);
@@ -127,15 +139,30 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
                     @Override
                     public void onItemClick(View view, int pos) {
                         LogUtils.d(TAG, "onItemClick:" + pos);
-                        if (mBooks != null && 0 < pos && pos < mBooks.size()) {
-                            enterBookDetail(mBooks.get(pos));
+                        if (mBooks != null && 0 <= pos && pos < mBooks.size()) {
+                            Book clickItem = mBooks.get(pos);
+                            if (!mIsActionMode && 0 < pos) {
+                                enterBookDetail(clickItem);
+                            } else if (mIsActionMode) {
+                                clickItem.setSelect(!clickItem.getSelect());
+                                if (clickItem.getSelect()) {
+                                    mSelectCnt++;
+                                } else {
+                                    mSelectCnt--;
+                                }
+                                updateDeleteSelect(mSelectCnt);
+                                mReadBooksRecyclerViewAdapter.notifySelectChange(pos);
+                            }
                         }
                     }
 
                     @Override
                     public void onItemLongClick(View view, int pos) {
                         LogUtils.d(TAG, "onItemLongClick:" + pos);
-                        if (mBooks != null && 0 < pos && pos < mBooks.size()) {
+                        if (!mIsActionMode && mBooks != null && 0 <= pos && pos < mBooks.size()) {
+                            mBooks.get(pos).setSelect(true);
+                            mSelectCnt++;
+                            updateDeleteSelect(mSelectCnt);
                             enterActionMode();
                         }
                     }
@@ -177,29 +204,6 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
 
     private void continueReading() {
         LogUtils.d(TAG, "onLoaderReset");
-        insert();
-    }
-
-    public int i = 20;
-
-    public void insert() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(BOOKS_COLUMN_NAME, "fanren" + i);
-        contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + i);
-        contentValues.put(BOOKS_COLUMN_IMG_NAME, "http://asdf.com" + i++);
-        getActivity().getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
-    }
-    public int deleteJ = 50;
-    public void delete() {
-        getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, BOOKS_COLUMN_ID + "=" + deleteJ--, null);
-    }
-    public int updateI = 100;
-    public void update() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(BOOKS_COLUMN_NAME, "fanren" + updateI);
-        contentValues.put(BOOKS_COLUMN_AUTHOR, "妄语" + updateI);
-        contentValues.put(BOOKS_COLUMN_IMG_NAME, "http://asdf.com" + updateI++);
-        getActivity().getContentResolver().update(LocalBooksProvider.CONTENT_URI, contentValues, BOOKS_COLUMN_ID + "=1", null);
     }
 
     private void enterBookDetail(Book book) {
@@ -222,6 +226,8 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mode.getMenuInflater().inflate(R.menu.action_mode_menu, menu);
+        mIsActionMode = true;
+        mReadBooksRecyclerViewAdapter.notifyActionMode(mIsActionMode);
         return true;
     }
 
@@ -232,10 +238,52 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.select_all:
+                updateDeleteSelect(mBooks.size());
+                selectAll();
+                mReadBooksRecyclerViewAdapter.notifyDataSetChanged();
+                break;
+            case R.id.no_select_all:
+                updateDeleteSelect(0);
+                clearAllSelect();
+                mReadBooksRecyclerViewAdapter.notifyDataSetChanged();
+                break;
+        }
         return false;
     }
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+        mIsActionMode = false;
+        updateDeleteSelect(0);
+        clearAllSelect();
+        mReadBooksRecyclerViewAdapter.notifyActionMode(mIsActionMode);
+    }
+
+    private void clearAllSelect() {
+        for (Book book: mBooks) {
+            book.setSelect(false);
+        }
+    }
+
+    private void selectAll() {
+        for (Book book: mBooks) {
+            book.setSelect(true);
+        }
+    }
+
+    private void updateDeleteSelect(int selectCnt) {
+        mSelectCnt = selectCnt;
+        if (mSelectCnt > 0) {
+            mActionModeDeleteSelect.setTextColor(getActivity().getColor(R.color.color_red_select));
+            mActionModeDeleteSelect.setEnabled(true);
+        } else {
+            mActionModeDeleteSelect.setTextColor(getActivity().getColor(R.color.color_red_no_select));
+            mActionModeDeleteSelect.setEnabled(false);
+        }
+        String text = String.format(getString(R.string.action_mode_delete_select), mSelectCnt);
+        mActionModeDeleteSelect.setText(text);
+
     }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_marginTop="@dimen/read_book_top">
+    android:layout_marginBottom="@dimen/read_book_top">
 
     <ImageView
         android:id="@+id/read_book_cover"

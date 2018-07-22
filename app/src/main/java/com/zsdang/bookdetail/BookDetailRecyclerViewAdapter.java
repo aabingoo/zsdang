@@ -45,6 +45,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private List<Book> mOtherWrittenBooks;
     private List<Book> mSimilarBooks;
     private boolean isOtherWrittenBooksExpand = false;
+    private int[] mCategorySrcList = {R.drawable.ic_read, R.drawable.ic_bookshelf_add, R.drawable.ic_catalog, R.drawable.ic_cache};
 
     @Override
     public int getItemViewType(int position) {
@@ -160,7 +161,6 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS:
                 WrittenBookItem writtenBookItem = (WrittenBookItem) holder;
                 int writtenBookPos = position - (getCheckedBookNum() + 1);
-                LogUtils.d("suby1", "writtenBookPos:" + writtenBookPos);
                 writtenBookItem.updateView(mOtherWrittenBooks.get(writtenBookPos));
                 break;
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS_EXPAND:
@@ -237,6 +237,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 for (int i = 0; i < toolsNavigationLl.getChildCount(); i++) {
                     View childView = toolsNavigationLl.getChildAt(i);
                     ImageView toolImg = childView.findViewById(R.id.navication_img);
+                    toolImg.setBackground(inContext.getDrawable(mCategorySrcList[i]));
                     TextView toolTitle = childView.findViewById(R.id.navication_title);
                     toolTitle.setText(toolsNavigationTitleArray[i]);
 
@@ -285,6 +286,10 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public CategoryTitleItem(Context context, View itemView) {
             super(itemView);
             inContext = context;
+        }
+
+        public void updateView() {
+
         }
 
     }
