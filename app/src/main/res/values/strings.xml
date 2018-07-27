@@ -9,4 +9,12 @@
     <string name="reading_book_latest_chapter">最新章节:\n%1$s</string>
     <string name="reading_book_progress">10% &lt;small&gt;已读&lt;/small&gt;</string>
     <string name="action_mode_delete_select">删除所选 (%1$d)</string>
+
+    <!--BookDetail-->
+    <string name="check_book_category_and_author">%1$s · %2$s</string>
+    <string name="author_other_books">%1$s 其他作品</string>
+    <string name="similar_books_recommend">同类推荐</string>
+    <string name="expend_string">展开 ⇵</string>
+    <string name="collapsed_string">收起 ⇵</string>
+
 </resources>

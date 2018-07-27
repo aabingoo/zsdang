@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/color_white"
+    android:paddingTop="@dimen/inner_item_padding"
+    android:paddingBottom="@dimen/inner_item_padding"
     android:gravity="center">
 
     <ImageView
@@ -17,5 +20,5 @@
         android:id="@+id/navication_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tt"/>
+        android:layout_marginTop="@dimen/navigation_item_title_top"/>
 </LinearLayout>

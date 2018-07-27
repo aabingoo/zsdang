@@ -19,6 +19,7 @@ public class Book implements Parcelable {
     private String mAuthor;
     private String mImg;
     private String mDesc;
+    private String mCategory;
     private List<String> mChapterIdList;
     private List<String> mChapterTitleList;
     private String mLaestChapterId;
@@ -53,6 +54,16 @@ public class Book implements Parcelable {
         mDesc = desc;
     }
 
+    public Book(String id, String name, String author, String img, String desc, String category) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mCategory = category;
+    }
+
     public Book(String id, String name, String author, String img, String desc,
                 String laestChapterId, String laestChapterName) {
         this();
@@ -61,6 +72,19 @@ public class Book implements Parcelable {
         mAuthor = author;
         mImg = img;
         mDesc = desc;
+        mLaestChapterId = laestChapterId;
+        mLaestChapterName = laestChapterName;
+    }
+
+    public Book(String id, String name, String author, String img, String desc, String category,
+                String laestChapterId, String laestChapterName) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mCategory = category;
         mLaestChapterId = laestChapterId;
         mLaestChapterName = laestChapterName;
     }
@@ -115,6 +139,13 @@ public class Book implements Parcelable {
 
     public void setSelect(boolean select) {
         mSelect = select;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+    public void setCategory(String category) {
+        mCategory = category;
     }
 
     @Override

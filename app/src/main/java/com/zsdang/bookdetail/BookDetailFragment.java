@@ -75,8 +75,8 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
-        mToolbar = rootView.findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
+//        mToolbar = rootView.findViewById(R.id.toolbar);
+//        mToolbar.inflateMenu(R.menu.toolbar_menu);
         mBookDetailRv = rootView.findViewById(R.id.book_detail_rv);
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -166,6 +166,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                     bookJson.getString("Author"),
                     bookJson.getString("Img"),
                     bookJson.getString("Desc"),
+                    bookJson.getString("CName"),
                     bookJson.getString("LastChapterId"),
                     bookJson.getString("LastChapter"));
         } catch (Exception e) {

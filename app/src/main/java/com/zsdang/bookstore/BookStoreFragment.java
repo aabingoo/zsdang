@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.data.web.DataRequestCallback;
 import com.zsdang.data.web.server.DataServiceManager;
+import com.zsdang.view.ExpandableTextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -134,6 +136,7 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 重磅推荐:" + bookList.length());
                             mRecommendBooks = getBooks(bookList);
+                            Log.d("suby1", "mr:" + mRecommendBooks.size());
                         } else if (categoryTitle.equals("火热新书")) {
                             JSONArray bookList = categoryItem.getJSONArray("Books");
                             LogUtils.d(TAG, "category 火热新书:" + bookList.length());
@@ -166,10 +169,15 @@ public class BookStoreFragment extends Fragment implements SwipeRefreshLayout.On
                         bookItem.getString("Author"),
                         bookItem.getString("Img"),
                         bookItem.getString("Desc"));
+                try {
+                    book.setCategory(bookItem.getString("CName"));
+                } catch (Exception e) {
+                    LogUtils.d(TAG, "Exception on getString(\"CName\"):" + e.toString());
+                }
                 result.add(book);
             }
         } catch (Exception e) {
-            LogUtils.d(TAG, "Exception on queryBookstore.");
+            LogUtils.d(TAG, "Exception on getBooks:" + e.toString());
         }
         return result;
     }

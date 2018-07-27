@@ -23,23 +23,15 @@
         android:layout_toEndOf="@+id/book_cover"
         android:textSize="16sp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="8dp"/>
 
     <TextView
-        android:id="@+id/book_category"
+        android:id="@+id/book_latest_chapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/book_name"
         android:layout_below="@+id/book_name"
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/book_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/book_name"
-        android:layout_below="@+id/book_category"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:maxLines="2"
         android:ellipsize="end"/>
 

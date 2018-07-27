@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,12 +14,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/body_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/reading_text_size"
-            android:padding="@dimen/inner_item_padding"/>
+            android:layout_height="wrap_content"
+            android:padding="@dimen/inner_item_padding"
+            android:textSize="@dimen/reading_text_size"/>
     </ScrollView>
 
 </LinearLayout>

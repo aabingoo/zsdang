@@ -25,7 +25,7 @@ public class DataServiceManager {
     public static final String HOST = "http://quapp.1122dh.com/";
     public static final String HOST_CHANNEL = HOST + "%s.html";
     public static final String MAN_CHANNEL = "v4/biquge/man";
-    public static final String BOOK_DETAIL = "info/";
+    public static final String HOST_DETAIL = HOST + "info/%s.html";
     public static final String HOST_CATALOG = HOST + "book/%s/";
     public static final String HOST_CHAPTER = HOST + "book/%s/%s.html";
     public static final String HOST_BOOK_COVER = HOST + "BookFiles/BookImages/%s";
@@ -48,7 +48,7 @@ public class DataServiceManager {
 
     public void queryBookDetial(String bookId, final DataRequestCallback callback) {
         LogUtils.d(TAG, "queryBookDetial");
-        String url = String.format(HOST_CHANNEL, BOOK_DETAIL + bookId);
+        String url = String.format(HOST_DETAIL,  bookId);
         request(url, callback);
     }
 
@@ -93,6 +93,7 @@ public class DataServiceManager {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                LogUtils.d(TAG, "onResponse:" + response.message() + " " + response.isSuccessful());
                 if (!response.isSuccessful()) {
                     // TODO
                     if (callback != null) {

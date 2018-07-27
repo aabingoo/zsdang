@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zsdang.ImageLoader;
-import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.bookcatalog.BookCatalogActivity;
@@ -46,6 +46,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private List<Book> mSimilarBooks;
     private boolean isOtherWrittenBooksExpand = false;
     private int[] mCategorySrcList = {R.drawable.ic_read, R.drawable.ic_bookshelf_add, R.drawable.ic_catalog, R.drawable.ic_cache};
+    private int[] mCategoryTitleIds = {R.string.author_other_books, R.string.similar_books_recommend};
 
     @Override
     public int getItemViewType(int position) {
@@ -132,7 +133,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 return new BookDetailItem(parent.getContext(), view);
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS:
                 view = LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.view_book_item, parent, false);
+                        R.layout.view_bookdetail_other_written_item, parent, false);
                 return new WrittenBookItem(parent.getContext(), view);
             case VIEW_TYPE_OTHER_WRITTEN_BOOKS_EXPAND:
                 view = LayoutInflater.from(parent.getContext()).inflate(
@@ -169,19 +170,19 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 break;
             case VIEW_TYPE_SIMILAR_BOOKS:
                 SimilarBookItem similarBookItem = (SimilarBookItem) holder;
-                LogUtils.d("suby1", "similarBookItem:" + similarBookItem);
                 int similarBookPos = position - (getOtherWrittenBooksExpandPos() + 2);
                 similarBookItem.updateView(mSimilarBooks.get(similarBookPos));
                 break;
             default:
-//                CategoryTitleItem categoryTitleItem = (CategoryTitleItem) holder;
-//                categoryTitleItem.updateView(mSimilarBooks);
+                CategoryTitleItem categoryTitleItem = (CategoryTitleItem) holder;
+                categoryTitleItem.updateView(position);
                 break;
         }
     }
 
     @Override
     public int getItemCount() {
+        if (mBook == null) return 0;
         return getCheckedBookNum() + getOtherWrittenBooksNum() + getSimilarBooksNum() + 3;
     }
 
@@ -231,7 +232,9 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 bookName.setText(book.getName());
 
                 // book author
-                bookAuthor.setText(book.getAuthor());
+                String caaStr = String.format(inContext.getString(R.string.check_book_category_and_author),
+                        book.getCategory(), book.getAuthor());
+                bookAuthor.setText(caaStr);
 
                 // tools navigation
                 for (int i = 0; i < toolsNavigationLl.getChildCount(); i++) {
@@ -282,14 +285,29 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     private class CategoryTitleItem extends RecyclerView.ViewHolder {
         private Context inContext;
+        private TextView title;
+        private TextView more;
 
         public CategoryTitleItem(Context context, View itemView) {
             super(itemView);
             inContext = context;
+            title = itemView.findViewById(R.id.title);
+            more = itemView.findViewById(R.id.more);
         }
 
-        public void updateView() {
+        public void updateView(int pos) {
+            Log.d("suby1", "pos:" + pos);
+            if (pos == 1) {
+                // title
+                String titleStr = String.format(inContext.getString(mCategoryTitleIds[0]), mBook.getAuthor());
+                title.setText(titleStr);
 
+                more.setVisibility(View.GONE);
+            } else {
+                title.setText(inContext.getString(mCategoryTitleIds[1]));
+
+                more.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -299,12 +317,14 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         private ImageView bookCover;
         private TextView bookName;
+        private TextView bookLatestChapter;
 
         public WrittenBookItem(Context context, View itemView) {
             super(itemView);
             inContext = context;
             bookCover = itemView.findViewById(R.id.book_cover);
             bookName = itemView.findViewById(R.id.book_name);
+            bookLatestChapter = itemView.findViewById(R.id.book_latest_chapter);
         }
 
         public void updateView(Book book) {
@@ -312,6 +332,8 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
 
                 bookName.setText(book.getName());
+
+                bookLatestChapter.setText("最新章节\n" + book.getLaestChapterName());
             }
         }
 
@@ -362,11 +384,11 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 if (isOtherWrittenBooksExpand) {
                     notifyItemRangeInserted(itemPos,
                             mOtherWrittenBooks.size() - OTHER_WRITTEN_BOOKS_DEFAULT_SHOW_NUM);
-                    navicationName.setText("收起");
+                    navicationName.setText(view.getContext().getString(R.string.collapsed_string));
                 } else {
                     notifyItemRangeRemoved(itemPos,
                             mOtherWrittenBooks.size() - OTHER_WRITTEN_BOOKS_DEFAULT_SHOW_NUM);
-                    navicationName.setText("展开");
+                    navicationName.setText(view.getContext().getString(R.string.expend_string));
                 }
             }
         }

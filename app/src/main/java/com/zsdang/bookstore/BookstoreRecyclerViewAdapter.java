@@ -34,8 +34,10 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private static final int VIEW_TYPE_HORIZONTAL = 3;
     private static final int VIEW_TYPE_VETICAL = 4;
 
-    String[] mNavacionTitles = {"玄幻奇幻", "武侠仙侠", "都市情言", "历史军事", "科幻灵异", "网游竞技", "女生频道", "同人小说"};
+    String[] mNavicionTitles = {"玄幻奇幻", "武侠仙侠", "都市情言", "历史军事", "科幻灵异", "网游竞技", "女生频道", "同人小说"};
     String[] mCategoryTitles = {"重磅推荐", "火热新书", "热门连载", "完本精选"};
+    private int[] mNavicationImgIds = {R.drawable.ic_xuanhuan, R.drawable.ic_wuxia, R.drawable.ic_dushi, R.drawable.ic_lishi,
+                            R.drawable.ic_lingyi, R.drawable.ic_wangyou, R.drawable.ic_nvsheng, R.drawable.ic_tongren};
     private List<Book> mRecommendBooks;
     private List<Book> mNewBooks;
     private List<Book> mSerializeBooks;
@@ -96,7 +98,7 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     private int getNavicationCnt() {
-        return mNavacionTitles.length;
+        return mNavicionTitles.length;
     }
 
     private int getRecommendBooksCntWithCategoryItem() {
@@ -182,7 +184,7 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
             case VIEW_TYPE_NAVIGATION:
                 NavicationItem navicationItem = (NavicationItem) holder;
-                navicationItem.updateView(mNavacionTitles[position - 1]);
+                navicationItem.updateView(position - 1);
                 break;
 
             case VIEW_TYPE_HORIZONTAL:
@@ -265,15 +267,20 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     private class NavicationItem extends BaseViewHolder {
 
+        private Context inContext;
+        private ImageView navicationImg;
         private TextView navicationName;
 
         public NavicationItem(View itemView) {
             super(itemView);
+            inContext = itemView.getContext();
+            navicationImg = itemView.findViewById(R.id.navication_img);
             navicationName = itemView.findViewById(R.id.navication_title);
         }
 
-        public void updateView(String title) {
-            navicationName.setText(title);
+        public void updateView(int position) {
+            navicationImg.setBackground(inContext.getDrawable(mNavicationImgIds[position]));
+            navicationName.setText(mNavicionTitles[position]);
         }
 
         @Override
@@ -287,6 +294,8 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         private Context inContext;
         private ImageView bookCover;
         private TextView bookName;
+        private TextView bookCategory;
+        private TextView bookDesc;
         private Book inBook;
 
         public BookHorizontalItem(Context context, View itemView) {
@@ -294,12 +303,21 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             inContext = context;
             bookCover = itemView.findViewById(R.id.book_cover);
             bookName = itemView.findViewById(R.id.book_name);
+            bookCategory = itemView.findViewById(R.id.book_category);
+            bookDesc = itemView.findViewById(R.id.book_desc);
         }
 
         public void updateView(Book book) {
             inBook = book;
             bookName.setText(book.getName());
             ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
+
+            String categoryAndAuthorStr = String.format(
+                    inContext.getString(R.string.check_book_category_and_author),
+                    book.getCategory(), book.getAuthor());
+            bookCategory.setText(categoryAndAuthorStr);
+
+            bookDesc.setText(book.getDesc());
         }
 
         @Override
