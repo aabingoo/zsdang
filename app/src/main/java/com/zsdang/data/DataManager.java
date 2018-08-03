@@ -96,4 +96,25 @@ public class DataManager {
         mContext.getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
     }
 
+    public void deleteFromBookshelf(List<Book> books) {
+        String where = formWhere(books);
+        mContext.getContentResolver().delete(LocalBooksProvider.CONTENT_URI, where, null);
+    }
+
+    private String formWhere(List<Book> books) {
+        String where = null;
+        if (books != null) {
+            if (books.size() > 1) {
+                where = "id IN (";
+                for (Book book: books) {
+                    where += book.getId() + ",";
+                }
+                where = where.substring(0, where.length() - 1) + ")";
+            } else {
+                where = "id = " + books.get(0).getId();
+            }
+        }
+        return where;
+    }
+
 }

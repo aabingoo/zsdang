@@ -25,6 +25,7 @@ import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.bookdetail.BookDetailActivity;
+import com.zsdang.data.DataManager;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.local.LocalBooksProvider;
 import com.zsdang.search.BookSearchActivity;
@@ -78,6 +79,18 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
         mActionModeDeleteSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataManager dataManager = new DataManager(getContext());
+                List<Book> deleteBooks = new ArrayList<>();
+                for (Book book: mBooks) {
+                    if (book.getSelect()) {
+                        deleteBooks.add(book);
+                    }
+                }
+                mBooks.removeAll(deleteBooks);
+                mSelectCnt -= deleteBooks.size();
+                updateDeleteSelect(mSelectCnt);
+
+                dataManager.deleteFromBookshelf(deleteBooks);
 
             }
         });

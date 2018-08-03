@@ -1,168 +1,109 @@
 package com.zsdang.search;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.SearchView;
 
-import com.zsdang.LogUtils;
 import com.zsdang.R;
-import com.zsdang.beans.Book;
-import com.zsdang.data.web.DataRequestCallback;
-import com.zsdang.data.web.server.DataServiceManager;
 
-;import org.json.JSONArray;
-import org.json.JSONObject;
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link BookSearchFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link BookSearchFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class BookSearchFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-import java.util.ArrayList;
-import java.util.List;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
-public class BookSearchFragment extends Fragment implements SearchView.OnQueryTextListener,
-        Toolbar.OnMenuItemClickListener{
-
-    private final String TAG = "BookSearchFragment";
-
-    private Toolbar mToolbar;
-    private SearchView mSearchView;
-    private Handler mHandler;
-    private List<Book> mSearchedBooks;
-    private RecyclerView mBookSearchRecyclerView;
-    private BookSearchRecyclerViewAdpater mBookSearchRecyclerViewAdpater;
-
+    private OnFragmentInteractionListener mListener;
 
     public BookSearchFragment() {
         // Required empty public constructor
     }
 
-    public static BookSearchFragment newInstance() {
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment BookSearchFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static BookSearchFragment newInstance(String param1, String param2) {
         BookSearchFragment fragment = new BookSearchFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mHandler = new Handler();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_book_search, container, false);
-        mToolbar = rootView.findViewById(R.id.search_toolbar);
-        mSearchView = rootView.findViewById(R.id.sv_book_search);
-        mSearchView.setOnQueryTextListener(this);
-//        mToolbar.inflateMenu(R.menu.search_toolbar_menu);
-        mToolbar.setOnMenuItemClickListener(this);
-
-        mBookSearchRecyclerView = rootView.findViewById(R.id.rv_book_search);
-        mBookSearchRecyclerViewAdpater = new BookSearchRecyclerViewAdpater();
-        mBookSearchRecyclerView.setAdapter(mBookSearchRecyclerViewAdpater);
-
-        return rootView;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_book_search_result, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        final Activity activity = getActivity();
-
-        // Init RecyclerView and set its adapter
-        mBookSearchRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-
-    }
-
-    //    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.search_toolbar_menu, menu);
-//    }
-
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        LogUtils.d(TAG, "id:" + item.getTitle());
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String keyword) {
-        LogUtils.d(TAG, "onQueryTextSubmit:" + keyword);
-        keyword = keyword.trim();
-        if (!TextUtils.isEmpty(keyword)) {
-            startSearchBooksByPage(keyword, 1);
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
-        return false;
     }
 
     @Override
-    public boolean onQueryTextChange(String s) {
-        LogUtils.d(TAG, "onQueryTextChange:" + s);
-        return false;
-    }
-
-    private void startSearchBooksByPage(String keyword, int pageNum) {
-        DataServiceManager dataServiceManager = new DataServiceManager();
-        dataServiceManager.searchBooksByPage(keyword, pageNum, new DataRequestCallback() {
-            @Override
-            public void onFailure() {
-
-            }
-
-            @Override
-            public void onSuccess(@NonNull String result) {
-                LogUtils.d(TAG, "onSuccess:" + result);
-                try {
-                    JSONObject pageJson = new JSONObject(result);
-                    mSearchedBooks = getSearchedBooks(pageJson);
-
-                    mHandler.post(notifyAdapterRunnable);
-                } catch (Exception e) {
-                    LogUtils.d(TAG, "Exception on queryBookstore.");
-                }
-            }
-        });
-    }
-
-    private List<Book> getSearchedBooks(JSONObject jsonObject) {
-        List<Book> result = new ArrayList<>();
-        try {
-            JSONArray bookArray = jsonObject.getJSONArray("data");
-            for (int i = 0; i < bookArray.length(); i++) {
-                JSONObject bookJson = bookArray.getJSONObject(i);
-                Book book = new Book(bookJson.getString("Id"),
-                        bookJson.getString("Name"),
-                        bookJson.getString("Author"),
-                        bookJson.getString("Img"),
-                        bookJson.getString("Desc"));
-                result.add(book);
-            }
-
-            mHandler.post(notifyAdapterRunnable);
-        } catch (Exception e) {
-            LogUtils.d(TAG, "Exception on queryBookstore.");
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
-        return result;
     }
 
-    private Runnable notifyAdapterRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mBookSearchRecyclerViewAdpater.notifyDataSetChanged(mSearchedBooks);
-        }
-    };
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 }

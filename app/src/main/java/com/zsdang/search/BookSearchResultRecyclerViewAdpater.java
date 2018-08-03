@@ -21,9 +21,9 @@ import com.zsdang.data.web.server.DataServiceManager;
 
 import java.util.List;
 
-public class BookSearchRecyclerViewAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BookSearchResultRecyclerViewAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final String TAG = "BookSearchRecyclerViewAdpater";
+    private final String TAG = "BookSearchResultRecyclerViewAdpater";
 
     private List<Book> mSearchedBooks;
 

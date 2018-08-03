@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,6 @@ public class TestFragment extends Fragment {
     private Button deleteBtn;
     private Button updateBtn;
     private Button updateDBBtn;
-    private ExpandableTextView mExpandableTextView;
 
     private String[] mProjection = new String[] {
             BOOKS_COLUMN_ID,
@@ -103,23 +103,14 @@ public class TestFragment extends Fragment {
             }
         });
 
-        ((Button) rootView.findViewById(R.id.queryBookstore)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                DataServiceManager manager = new DataServiceManager();
-//                manager.queryBookstore();
-                mExpandableTextView.setText("默认我们是设置成收起状态的，在收起状态时，我们设置当前行数为最大可显示行数，并且按钮显示出来默认我们是设且出来默认我们是设且出来默认我们是设且按钮显示出来");
-            }
-        });
-
-        mExpandableTextView = (ExpandableTextView) rootView.findViewById(R.id.expand_tv);
-
         ((Button) rootView.findViewById(R.id.search)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
 //                startActivity(intent);
-                mExpandableTextView.setText("aaaaa");
+
+                Log.d("suby1", "level:" + mLevel);
+                setRoloLevel("3");
             }
         });
 
@@ -159,6 +150,11 @@ public class TestFragment extends Fragment {
     public int deleteJ = 50;
     public void delete() {
         getActivity().getContentResolver().delete(LocalBooksProvider.CONTENT_URI, null, null);
+    }
+
+    private String mLevel = "2";
+    public void setRoloLevel(String level) {
+        mLevel = level;
     }
 
 }

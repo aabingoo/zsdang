@@ -1,6 +1,7 @@
 package com.zsdang.data.web.server;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.zsdang.LogUtils;
 import com.zsdang.data.web.DataRequestCallback;
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -123,5 +125,47 @@ public class DataServiceManager {
                 }
             }
         });
+    }
+
+    public void levelup() {
+
+        OkHttpClient okHttpClient  = new OkHttpClient.Builder()
+                .build();
+
+        //post方式提交的数据
+        FormBody formBody = new FormBody.Builder()
+                .add("name", "android基础")
+                .add("price", "50")
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://172.20.192.168:8080/getbookByFrom")//请求的url
+                .post(formBody)
+                .build();
+
+        //创建/Call
+        Call call = okHttpClient.newCall(request);
+        //加入队列 异步操作
+        call.enqueue(new Callback() {
+            //请求错误回调方法
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("连接失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("suby1", "levelup response:" + response.body().string());
+            }
+        });
+
+    }
+
+    public void index() {
+
+    }
+
+    public void level() {
+
     }
 }
