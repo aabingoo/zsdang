@@ -9,12 +9,14 @@
         android:id="@+id/select_all"
         android:title="全选"
         android:orderInCategory="60"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom"
+        android:inputType="textCapWords"
+        android:imeOptions="actionSearch" />
 
     <item
         android:id="@+id/no_select_all"
         android:title="全不选"
         android:orderInCategory="60"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

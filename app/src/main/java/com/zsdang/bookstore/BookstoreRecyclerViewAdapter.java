@@ -152,7 +152,7 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
             case VIEW_TYPE_NAVIGATION:
                 view = LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.view_bookstore_navication_item, parent, false);
+                        R.layout.view_bookstore_navigation_item, parent, false);
                 return new NavicationItem(view);
 
             case VIEW_TYPE_HORIZONTAL:
@@ -274,8 +274,8 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         public NavicationItem(View itemView) {
             super(itemView);
             inContext = itemView.getContext();
-            navicationImg = itemView.findViewById(R.id.navication_img);
-            navicationName = itemView.findViewById(R.id.navication_title);
+            navicationImg = itemView.findViewById(R.id.navigation_img);
+            navicationName = itemView.findViewById(R.id.navigation_title);
         }
 
         public void updateView(int position) {

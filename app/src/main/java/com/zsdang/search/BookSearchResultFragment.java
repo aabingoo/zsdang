@@ -19,6 +19,7 @@ import android.support.v7.widget.SearchView;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
+import com.zsdang.data.GlobalConstant;
 import com.zsdang.data.web.DataRequestCallback;
 import com.zsdang.data.web.server.DataServiceManager;
 
@@ -28,13 +29,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookSearchResultFragment extends Fragment implements SearchView.OnQueryTextListener,
-        Toolbar.OnMenuItemClickListener{
+public class BookSearchResultFragment extends Fragment {
 
     private final String TAG = "BookSearchResultFragment";
 
-    private Toolbar mToolbar;
-    private SearchView mSearchView;
+    private String mKeyword;
     private Handler mHandler;
     private List<Book> mSearchedBooks;
     private RecyclerView mBookSearchRecyclerView;
@@ -45,8 +44,11 @@ public class BookSearchResultFragment extends Fragment implements SearchView.OnQ
         // Required empty public constructor
     }
 
-    public static BookSearchResultFragment newInstance() {
+    public static BookSearchResultFragment newInstance(String keyword) {
         BookSearchResultFragment fragment = new BookSearchResultFragment();
+        Bundle args = new Bundle();
+        args.putString(GlobalConstant.EXTRA_KEYWORD, keyword);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -54,18 +56,18 @@ public class BookSearchResultFragment extends Fragment implements SearchView.OnQ
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mKeyword = bundle.getString(GlobalConstant.EXTRA_KEYWORD);
+        }
+
         mHandler = new Handler();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_book_search, container, false);
-        mToolbar = rootView.findViewById(R.id.search_toolbar);
-        mSearchView = rootView.findViewById(R.id.sv_book_search);
-        mSearchView.setOnQueryTextListener(this);
-//        mToolbar.inflateMenu(R.menu.search_toolbar_menu);
-        mToolbar.setOnMenuItemClickListener(this);
+        View rootView = inflater.inflate(R.layout.fragment_book_search_result, container, false);
 
         mBookSearchRecyclerView = rootView.findViewById(R.id.rv_book_search);
         mBookSearchResultRecyclerViewAdpater = new BookSearchResultRecyclerViewAdpater();
@@ -83,6 +85,7 @@ public class BookSearchResultFragment extends Fragment implements SearchView.OnQ
         // Init RecyclerView and set its adapter
         mBookSearchRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
+        startSearchBooksByPage(mKeyword, 1);
     }
 
     //    @Override
@@ -92,27 +95,13 @@ public class BookSearchResultFragment extends Fragment implements SearchView.OnQ
 //    }
 
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        LogUtils.d(TAG, "id:" + item.getTitle());
-        return false;
-    }
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        LogUtils.d(TAG, "id:" + item.getTitle());
+//        return false;
+//    }
 
-    @Override
-    public boolean onQueryTextSubmit(String keyword) {
-        LogUtils.d(TAG, "onQueryTextSubmit:" + keyword);
-        keyword = keyword.trim();
-        if (!TextUtils.isEmpty(keyword)) {
-            startSearchBooksByPage(keyword, 1);
-        }
-        return false;
-    }
 
-    @Override
-    public boolean onQueryTextChange(String s) {
-        LogUtils.d(TAG, "onQueryTextChange:" + s);
-        return false;
-    }
 
     private void startSearchBooksByPage(String keyword, int pageNum) {
         DataServiceManager dataServiceManager = new DataServiceManager();

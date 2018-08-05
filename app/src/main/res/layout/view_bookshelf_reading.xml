@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/reading_book_item_height"
-    android:background="@color/color_theam"
+    android:background="@color/color_theme"
     android:layout_marginBottom="@dimen/reading_book_bottom">
 
     <ImageView
@@ -57,7 +57,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/reading_book_cover"
         android:layout_marginEnd="@dimen/reading_book_left"
-        android:background="@drawable/continue_reading_border"
+        android:background="@drawable/bg_continue_reading_border"
         android:gravity="center"
         android:text="@string/continue_reading"/>
 

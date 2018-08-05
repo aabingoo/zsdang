@@ -8,4 +8,9 @@
         <attr name="expand_text" format="string" />
         <attr name="collpased_text" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="TabLayoutAttrs">
+        <attr name="item_horizontal_margin" format="integer" />
+        <attr name="item_vertical_margin" format="integer" />
+    </declare-styleable>
 </resources>

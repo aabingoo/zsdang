@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,10 +68,10 @@ public class MainActivity extends AppCompatActivity
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigationBar.setTabSelectedListener(this);
         mBottomNavigationBar
-            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookshelf, "书架").setActiveColor(R.color.color_theam))
-            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookstore, "书城").setActiveColor(R.color.color_theam))
-            .addItem(new BottomNavigationItem(R.drawable.ic_home_my, "我的").setActiveColor(R.color.color_theam))
-            .addItem(new BottomNavigationItem(R.drawable.ic_videogame, "Test").setActiveColor(R.color.color_theam))
+            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookshelf, "书架").setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookstore, "书城").setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.ic_home_my, "我的").setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.ic_videogame, "Test").setActiveColor(R.color.color_theme))
             .setFirstSelectedPosition(DEFAULT_FRAGMENT_INDEX)
             .initialise();
 
@@ -142,14 +140,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onActionModeStarted(ActionMode mode) {
-        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_theam));
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_theme));
         mBottomNavigationBar.setVisibility(View.GONE);
         super.onActionModeStarted(mode);
     }
 
     @Override
     public void onActionModeFinished(ActionMode mode) {
-        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_theam));
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.color_theme));
         mBottomNavigationBar.setVisibility(View.VISIBLE);
         super.onActionModeFinished(mode);
     }

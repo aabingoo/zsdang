@@ -6,4 +6,9 @@ public class GlobalConstant {
     public static final String EXTRA_BOOK = "book";
     public static final String EXTRA_BOOK_ID = "book_id";
     public static final String EXTRA_CHAPTER_ID = "chapter_id";
+
+    // To open search result fragment
+    public static final String EXTRA_KEYWORD = "keyword";
+
+
 }

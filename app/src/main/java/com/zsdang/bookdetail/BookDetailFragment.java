@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.zsdang.ImageLoader;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
@@ -39,6 +43,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     public static final String ARG_PARAM_BOOK = "book";
 
     private Toolbar mToolbar;
+    private AppBarLayout mAppBarLayout;
     private Book mBook;
     private List<Book> mOtherWrittenBooks;
     private List<Book> mSimilarBooks;
@@ -47,7 +52,10 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     private RecyclerView mBookDetailRv;
     private BookDetailRecyclerViewAdapter mBookDetailRecyclerViewAdapter;
     private Handler mHandler;
-//    private View mLoadingView;
+
+    private ImageView mBookCover;
+    private TextView mBookName;
+    private TextView mBookCategoryAndAuthor;
 
     public static BookDetailFragment newInstance(Book book) {
         BookDetailFragment fragment = new BookDetailFragment();
@@ -75,14 +83,44 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
-//        mToolbar = rootView.findViewById(R.id.toolbar);
-//        mToolbar.inflateMenu(R.menu.toolbar_menu);
+        // ToolBar
+        mToolbar = rootView.findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
+
+        // Checked book view
+        mBookCover = rootView.findViewById(R.id.book_cover);
+        mBookName = rootView.findViewById(R.id.book_name);
+        mBookCategoryAndAuthor = rootView.findViewById(R.id.book_category_and_author);
+
+        // RecyclerView
         mBookDetailRv = rootView.findViewById(R.id.book_detail_rv);
+
+        // SwipeRefreshLayout
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-//        mLoadingView = rootView.findViewById(R.id.loading_pb);
-//        mLoadingView.setVisibility(View.VISIBLE);
+
+        // AppBarLayout
+        mAppBarLayout = rootView.findViewById(R.id.appbar_layout);
+        // Handle the issue that SwipeRefreshLayout refresh behaviour abnormal
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset >= 0) {
+                    mSwipeRefreshLayout.setEnabled(true);
+                } else {
+                    mSwipeRefreshLayout.setEnabled(false);
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -213,8 +251,16 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
     private Runnable notifyAdapterRunnable = new Runnable() {
         @Override
         public void run() {
-            mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mOtherWrittenBooks, mSimilarBooks);
-            mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded() && mBook != null) {
+                ImageLoader.loadImgInto(getContext(), mBook.getImg(), mBookCover);
+                mBookName.setText(mBook.getName());
+                String caaStr = String.format(getContext().getString(R.string.check_book_category_and_author),
+                        mBook.getCategory(), mBook.getAuthor());
+                mBookCategoryAndAuthor.setText(caaStr);
+
+                mBookDetailRecyclerViewAdapter.notifyDataSetChanged(mBook, mOtherWrittenBooks, mSimilarBooks);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         }
     };
 

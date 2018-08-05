@@ -11,8 +11,8 @@
         <!--ActionMode-->
         <item name="android:windowActionModeOverlay">true</item>
         <item name="windowActionModeOverlay">true</item> <!--Overlay toolbar-->
-        <item name="android:actionModeBackground">@color/color_theam</item>
-        <item name="actionModeBackground">@color/color_theam</item>
+        <item name="android:actionModeBackground">@color/color_theme</item>
+        <item name="actionModeBackground">@color/color_theme</item>
         <item name="android:actionModeCloseDrawable">@drawable/ic_close_white</item>
         <item name="android:actionMenuTextColor">@color/color_white</item> <!--Set the text color or action mode-->
 

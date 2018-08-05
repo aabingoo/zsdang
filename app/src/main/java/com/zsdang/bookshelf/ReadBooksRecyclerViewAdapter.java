@@ -11,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.zsdang.ImageLoader;
 import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
-import com.zsdang.data.web.server.DataServiceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,11 +145,11 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 // book cover
                 ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
                 if (mIsActionMode) {
-//                    itemView.setForeground(inContext.getDrawable(R.drawable.book_cover_select));
+//                    itemView.setForeground(inContext.getDrawable(R.drawable.bg_book_cover_select));
                     if (book.getSelect()) {
-                        bookCover.setForeground(inContext.getDrawable(R.drawable.book_cover_select));
+                        bookCover.setForeground(inContext.getDrawable(R.drawable.bg_book_cover_select));
                     } else {
-                        bookCover.setForeground(inContext.getDrawable(R.drawable.book_cover_no_select));
+                        bookCover.setForeground(inContext.getDrawable(R.drawable.bg_book_cover_no_select));
                     }
                 } else {
                     bookCover.setForeground(null);
@@ -200,9 +198,9 @@ public class ReadBooksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
                 if (mIsActionMode) {
                     if (book.getSelect()) {
-                        bookCover.setForeground(inContext.getDrawable(R.drawable.book_cover_select));
+                        bookCover.setForeground(inContext.getDrawable(R.drawable.bg_book_cover_select));
                     } else {
-                        bookCover.setForeground(inContext.getDrawable(R.drawable.book_cover_no_select));
+                        bookCover.setForeground(inContext.getDrawable(R.drawable.bg_book_cover_no_select));
                     }
                 } else {
                     bookCover.setForeground(null);

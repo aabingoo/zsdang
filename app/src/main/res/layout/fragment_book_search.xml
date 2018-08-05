@@ -1,34 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              tools:context=".search.BookSearchResultFragment"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/search_toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_theam"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/sv_book_search"
+        <TextView
+            android:id="@+id/popular_search_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:imeOptions="actionSearch"
-            app:queryHint="搜索"
-            app:iconifiedByDefault="false"/>
+            android:text="热门搜索"/>
 
-    </android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="换一批"
+            android:layout_alignParentEnd="true"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_book_search"
+        <com.zsdang.view.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popular_search_tv"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tab"
+                android:gravity="center"
+                android:text="圣墟" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tab"
+                android:gravity="center"
+                android:text="凡人修仙传" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tab"
+                android:gravity="center"
+                android:text="凡人修仙之仙界篇" />
+
+        </com.zsdang.view.TabLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/search_history_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索历史"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清空历史"
+            android:layout_alignParentEnd="true"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_history_tv"
+            android:layout_marginTop="16dp">
+
+            <com.zsdang.view.TabLayout
+                android:id="@+id/search_history_tl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+
+
+    </RelativeLayout>
 
 </LinearLayout>

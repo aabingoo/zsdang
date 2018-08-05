@@ -11,13 +11,13 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/navication_img"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:id="@+id/navigation_img"
+        android:layout_width="@dimen/bookstore_navigation_size"
+        android:layout_height="@dimen/bookstore_navigation_size"
         android:background="@drawable/ic_income" />
 
     <TextView
-        android:id="@+id/navication_title"
+        android:id="@+id/navigation_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/navigation_item_title_top"/>

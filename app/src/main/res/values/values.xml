@@ -42,11 +42,22 @@
     <dimen name="bookdetail_checked_name_top">10dp</dimen>
     <dimen name="bookdetail_checked_category_and_author_top">4dp</dimen>
     <dimen name="bookdetail_checked_category_and_author_bottom">8dp</dimen>
-    <dimen name="bookdetail_checked_name_test_size">22sp</dimen>
-    <dimen name="bookdetail_checked_category_and_author_test_size">14sp</dimen>
-    <dimen name="bookdetail_checked_desc_test_size">16sp</dimen>
+    <dimen name="bookdetail_checked_name_test_size">18sp</dimen>
+    <dimen name="bookdetail_checked_category_and_author_test_size">12sp</dimen>
+    <dimen name="bookdetail_checked_desc_test_size">15sp</dimen>
     <dimen name="bookdetail_checked_book_latest_chapter_test_size">14sp</dimen>
+    <dimen name="bookdetail_navigation_size">32sp</dimen>
+
+
+    <!--Book Store-->
+    <dimen name="bookstore_navigation_size">32sp</dimen>
 
     <!--navigation item-->
     <dimen name="navigation_item_title_top">4dp</dimen>
+
+    <!--SearchView-->
+    <dimen name="searchview_width">232dp</dimen>
+    <dimen name="searchview_height">32dp</dimen>
+    <dimen name="searchview_text_size">14sp</dimen>
+
 </resources>

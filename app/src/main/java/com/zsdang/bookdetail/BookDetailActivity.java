@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.zsdang.R;
@@ -21,13 +20,10 @@ public class BookDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Utils.setStatusBarColor(this, R.color.color_theam);
+        Utils.setStatusBarColor(this, R.color.color_theme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detial);
-
-        mToolbar = findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
 
         Intent intent = getIntent();
         if (intent != null) {

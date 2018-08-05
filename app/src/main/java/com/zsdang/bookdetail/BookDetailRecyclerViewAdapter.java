@@ -45,7 +45,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private List<Book> mOtherWrittenBooks;
     private List<Book> mSimilarBooks;
     private boolean isOtherWrittenBooksExpand = false;
-    private int[] mCategorySrcList = {R.drawable.ic_read, R.drawable.ic_bookshelf_add, R.drawable.ic_catalog, R.drawable.ic_cache};
+    private int[] mCategorySrcList = {R.drawable.ic_bd_nvg_read, R.drawable.ic_bd_nvg_add_to_bs, R.drawable.ic_bd_nvg_catalog, R.drawable.ic_bd_nvg_cache};
     private int[] mCategoryTitleIds = {R.string.author_other_books, R.string.similar_books_recommend};
 
     @Override
@@ -201,9 +201,6 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         private Context inContext;
 
-        private ImageView bookCover;
-        private TextView bookName;
-        private TextView bookAuthor;
         private ExpandableTextView bookDesc;
         private TextView bookLatestChapter;
 
@@ -214,9 +211,6 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public BookDetailItem(Context context, View itemView) {
             super(itemView);
             inContext = context;
-            bookCover = itemView.findViewById(R.id.book_cover);
-            bookName = itemView.findViewById(R.id.book_name);
-            bookAuthor = itemView.findViewById(R.id.book_category_and_author);
             bookDesc = itemView.findViewById(R.id.book_desc);
             bookLatestChapter = itemView.findViewById(R.id.book_latest_chapter);
             toolsNavigationLl = itemView.findViewById(R.id.ll_tools_navigation);
@@ -225,23 +219,13 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         public void updateView(final Book book) {
             if (book != null) {
-                // book cover
-                ImageLoader.loadImgInto(inContext, book.getImg(), bookCover);
-
-                // book name
-                bookName.setText(book.getName());
-
-                // book author
-                String caaStr = String.format(inContext.getString(R.string.check_book_category_and_author),
-                        book.getCategory(), book.getAuthor());
-                bookAuthor.setText(caaStr);
 
                 // tools navigation
                 for (int i = 0; i < toolsNavigationLl.getChildCount(); i++) {
                     View childView = toolsNavigationLl.getChildAt(i);
-                    ImageView toolImg = childView.findViewById(R.id.navication_img);
+                    ImageView toolImg = childView.findViewById(R.id.navigation_img);
                     toolImg.setBackground(inContext.getDrawable(mCategorySrcList[i]));
-                    TextView toolTitle = childView.findViewById(R.id.navication_title);
+                    TextView toolTitle = childView.findViewById(R.id.navigation_title);
                     toolTitle.setText(toolsNavigationTitleArray[i]);
 
                     childView.setOnClickListener(new View.OnClickListener() {

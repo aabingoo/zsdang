@@ -4,11 +4,17 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".search.BookSearchActivity">
 
-    <!--<item-->
-        <!--android:id="@+id/search_item"-->
-        <!--android:title="title"-->
-        <!--android:orderInCategory="80"-->
-        <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
-        <!--app:showAsAction="always" />-->
+    <item
+        android:id="@+id/searchview_item"
+        android:title="SearchView"
+        android:orderInCategory="80"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search_submit_item"
+        android:title="搜索"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom" />
 
 </menu>
