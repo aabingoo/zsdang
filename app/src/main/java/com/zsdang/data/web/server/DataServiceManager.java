@@ -1,7 +1,6 @@
 package com.zsdang.data.web.server;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.zsdang.LogUtils;
 import com.zsdang.data.web.DataRequestCallback;
@@ -12,7 +11,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -48,46 +46,60 @@ public class DataServiceManager {
 
     }
 
+    /**
+     * Async
+     * @param bookId
+     * @param callback
+     */
     public void queryBookDetial(String bookId, final DataRequestCallback callback) {
         LogUtils.d(TAG, "queryBookDetial");
         String url = String.format(HOST_DETAIL,  bookId);
-        request(url, callback);
+        asyncRequest(url, callback);
     }
 
+    /**
+     * Async
+     * @param callback
+     */
     public void queryBookstore(final DataRequestCallback callback) {
         // TODO: check the network status
         LogUtils.d(TAG, "queryBookstore");
         String url = String.format(HOST_CHANNEL, MAN_CHANNEL);
-        request(url, callback);
+        asyncRequest(url, callback);
     }
 
+    /**
+     * Async
+     * @param bookId
+     * @param callback
+     */
     public void queryBookCatalog(String bookId, final DataRequestCallback callback) {
         LogUtils.d(TAG, "queryBookCatalog");
         String url = String.format(HOST_CATALOG, bookId);
-        request(url, callback);
+        asyncRequest(url, callback);
     }
 
     public void queryBookChapterContent(String bookId, String chapterId, DataRequestCallback callback) {
         LogUtils.d(TAG, "queryBookChapterContent");
         String url = String.format(HOST_CHAPTER, bookId, chapterId);
-        request(url, callback);
+        asyncRequest(url, callback);
     }
 
     public void searchBooksByPage(String keyword, int pageNum, final DataRequestCallback callback) {
         LogUtils.d(TAG, "searchBooksByPage");
         String url = String.format(HOST_BOOK_SEARCH, keyword, pageNum);
-        request(url, callback);
+        asyncRequest(url, callback);
     }
 
-    private void request(String url, final DataRequestCallback callback) {
-        LogUtils.d(TAG, "request");
+    private void asyncRequest(String url, final DataRequestCallback callback) {
+        LogUtils.d(TAG, "asyncRequest");
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                LogUtils.d(TAG, "request - onFailure");
+                LogUtils.d(TAG, "asyncRequest - onFailure");
                 if (callback != null) {
                     callback.onFailure();
                 }
@@ -127,45 +139,29 @@ public class DataServiceManager {
         });
     }
 
-    public void levelup() {
-
-        OkHttpClient okHttpClient  = new OkHttpClient.Builder()
-                .build();
-
-        //post方式提交的数据
-        FormBody formBody = new FormBody.Builder()
-                .add("name", "android基础")
-                .add("price", "50")
-                .build();
+    private String syncRequest(String url) {
+        LogUtils.d(TAG, "syncRequest");
+        String result = "";
 
         Request request = new Request.Builder()
-                .url("http://172.20.192.168:8080/getbookByFrom")//请求的url
-                .post(formBody)
+                .url(url)
                 .build();
-
-        //创建/Call
-        Call call = okHttpClient.newCall(request);
-        //加入队列 异步操作
-        call.enqueue(new Callback() {
-            //请求错误回调方法
-            @Override
-            public void onFailure(Call call, IOException e) {
-                System.out.println("连接失败");
+        try {
+            Response response = mOkHttpClient.newCall(request).execute();
+            if (response.isSuccessful()) {
+                result = response.body().string();
+                if (!TextUtils.isEmpty(result)) {
+                    JSONObject pageJson = new JSONObject(result);
+                    if (pageJson.getInt("status") != 1
+                            || !pageJson.getString("info").equals("success")) {
+                        result = "";
+                    }
+                }
             }
+        } catch (Exception e) {
+            LogUtils.d(TAG, "Exception at sync request:" + e.toString());
+        }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("suby1", "levelup response:" + response.body().string());
-            }
-        });
-
-    }
-
-    public void index() {
-
-    }
-
-    public void level() {
-
+        return result;
     }
 }

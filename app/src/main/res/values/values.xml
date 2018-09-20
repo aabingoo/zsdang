@@ -37,6 +37,12 @@
     <dimen name="book_cover_width">81dp</dimen>
     <dimen name="book_cover_height">108dp</dimen>
 
+    <dimen name="bs_null_reading_item_img_size">100dp</dimen>
+    <dimen name="bs_null_reading_item_name_top">8dp</dimen>
+    <dimen name="bs_null_reading_item_name_text_size">16sp</dimen>
+
+
+
     <!--Book Detail-->
     <dimen name="bookdetail_checked_cover_top">28dp</dimen>
     <dimen name="bookdetail_checked_name_top">10dp</dimen>
@@ -60,4 +66,18 @@
     <dimen name="searchview_height">32dp</dimen>
     <dimen name="searchview_text_size">14sp</dimen>
 
+    <!--Warn dialog fragment-->
+    <dimen name="dialog_content_margin">26dp</dimen>
+    <dimen name="dialog_content_text_size">16sp</dimen>
+    <dimen name="dialog_button_height">36dp</dimen>
+    <dimen name="dialog_button_margin">20dp</dimen>
+    <dimen name="dialog_button_space">12dp</dimen>
+    <dimen name="dialog_button_text_size">14sp</dimen>
+
+    <!--catalog-->
+    <dimen name="catalog_list_item_height">56dp</dimen>
+    <dimen name="catalog_list_item_text_margin">24dp</dimen>
+    <dimen name="catalog_list_item_divider_margin">18dp</dimen>
+    <dimen name="catalog_list_item_text_size">16sp</dimen>
+    <dimen name="catalog_list_item_image_size">28dp</dimen>
 </resources>

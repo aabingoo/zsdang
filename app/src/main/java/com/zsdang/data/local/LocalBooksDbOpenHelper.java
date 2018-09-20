@@ -21,8 +21,15 @@ public class LocalBooksDbOpenHelper extends SQLiteOpenHelper {
     public static final String BOOKS_COLUMN_NAME = "name";
     public static final String BOOKS_COLUMN_AUTHOR = "author";
     public static final String BOOKS_COLUMN_IMG_NAME = "img_name";
-    public static final String BOOKS_COLUMN_INTRODUCTION = "introduction";
-    public static final String BOOKS_COLUMN_LATEST_CHAPTER = "latest_chapter";
+    public static final String BOOKS_COLUMN_DESCRIPTION = "description";
+    public static final String BOOKS_COLUMN_CATEGORY_ID = "category_id";
+    public static final String BOOKS_COLUMN_CATEGORY = "category";
+    public static final String BOOKS_COLUMN_FIRST_CHAPTER_ID = "first_chapter_id";
+    public static final String BOOKS_COLUMN_LATEST_CHAPTER_ID = "latest_chapter_id";
+    public static final String BOOKS_COLUMN_LATEST_CHAPTER_TITLE = "latest_chapter_title";
+    public static final String BOOKS_COLUMN_LATEST_CHAPTER_DATE = "latest_chapter_date";
+    public static final String BOOKS_COLUMN_LATEST_CHAPTER_ISREAD = "latest_chapter_isread";
+    public static final String BOOKS_COLUMN_STATUS = "status";
 
     public LocalBooksDbOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,8 +44,15 @@ public class LocalBooksDbOpenHelper extends SQLiteOpenHelper {
                 +  "name TEXT NOT NULL,"
                 +  "author TEXT NOT NULL,"
                 +  "img_name TEXT NOT NULL,"
-                +  "introduction TEXT,"
-                +  "latest_chapter TEXT,"
+                +  "description TEXT,"
+                +  "category_id TEXT,"
+                +  "category TEXT,"
+                +  "first_chapter_id TEXT,"
+                +  "latest_chapter_id TEXT,"
+                +  "latest_chapter_title TEXT,"
+                +  "latest_chapter_date TEXT,"
+                +  "latest_chapter_isread INTEGER,"
+                +  "status TEXT,"
                 +  "unique(name,author,img_name)"
                 +  ");";
         db.execSQL(create_table_sql);

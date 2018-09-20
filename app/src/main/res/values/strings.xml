@@ -4,11 +4,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--home-->
+    <string name="home_bookshelf">书架</string>
+    <string name="home_bookstore">书城</string>
+    <string name="home_mine">我的</string>
+
     <!--Bookshelf-->
     <string name="continue_reading">继续阅读</string>
     <string name="reading_book_latest_chapter">最新章节:\n%1$s</string>
     <string name="reading_book_progress">10% &lt;small&gt;已读&lt;/small&gt;</string>
     <string name="action_mode_delete_select">删除所选 (%1$d)</string>
+
+    <string name="bs_null_item_recommend">火热推荐</string>
+    <string name="bs_null_item_local_import">本地导入</string>
+    <string name="bs_null_item_wifi_transfer">WiFi传书</string>
+
+    <string name="bs_null_reading_item_name">尚无正在阅读的书籍</string>
 
     <!--BookDetail-->
     <string name="check_book_category_and_author">%1$s · %2$s</string>
@@ -17,4 +28,9 @@
     <string name="expend_string">展开 ⇵</string>
     <string name="collapsed_string">收起 ⇵</string>
 
+    <!--Warn dialog fragment-->
+    <string name="delete_warning">确定删除所选书籍？</string>
+    <string name="delete_success">已移除%1$d本书籍</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
 </resources>

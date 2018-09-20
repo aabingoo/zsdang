@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity
         mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigationBar.setTabSelectedListener(this);
         mBottomNavigationBar
-            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookshelf, "书架").setActiveColor(R.color.color_theme))
-            .addItem(new BottomNavigationItem(R.drawable.icon_home_bookstore, "书城").setActiveColor(R.color.color_theme))
-            .addItem(new BottomNavigationItem(R.drawable.ic_home_my, "我的").setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.ic_home_bookshelf, getResources().getString(R.string.home_bookshelf)).setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.ic_home_bookstore, getResources().getString(R.string.home_bookstore)).setActiveColor(R.color.color_theme))
+            .addItem(new BottomNavigationItem(R.drawable.ic_home_mine, getResources().getString(R.string.home_mine)).setActiveColor(R.color.color_theme))
             .addItem(new BottomNavigationItem(R.drawable.ic_videogame, "Test").setActiveColor(R.color.color_theme))
             .setFirstSelectedPosition(DEFAULT_FRAGMENT_INDEX)
             .initialise();

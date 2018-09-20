@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dialog_content_margin"
+        android:textSize="@dimen/dialog_content_text_size"
+        android:text="@string/delete_warning"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_button_height"
+        android:layout_marginBottom="@dimen/dialog_button_margin"
+        android:layout_marginStart="@dimen/dialog_button_margin"
+        android:layout_marginEnd="@dimen/dialog_button_margin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/dialog_button_text_size"
+            android:layout_weight="1"
+            android:background="@drawable/bg_warn_dialog_btn_cancel"
+            android:text="@string/cancel"/>
+
+        <TextView
+            android:id="@+id/dialog_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dialog_button_space"
+            android:gravity="center"
+            android:textSize="@dimen/dialog_button_text_size"
+            android:layout_weight="1"
+            android:background="@color/color_theme"
+            android:textColor="@color/color_white"
+            android:text="@string/ok"/>
+    </LinearLayout>
+
+</LinearLayout>

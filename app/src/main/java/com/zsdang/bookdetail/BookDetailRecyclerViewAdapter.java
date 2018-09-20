@@ -21,6 +21,7 @@ import com.zsdang.data.DataManager;
 import com.zsdang.data.GlobalConstant;
 import com.zsdang.reading.ReadingActivity;
 import com.zsdang.view.ExpandableTextView;
+import com.zsdang.view.WarnDialogFragment;
 
 import java.util.List;
 
@@ -244,6 +245,8 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                                     inContext.startActivity(intent);
                                     break;
                                 case R.id.cache_book:
+
+                                    break;
                             }
                         }
                     });
@@ -253,13 +256,13 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 bookDesc.setText(book.getDesc());
 
                 // book latest chapter
-                bookLatestChapter.setText(book.getLaestChapterName() + " >");
+                bookLatestChapter.setText(book.getLatestChapterTitle() + " >");
                 bookLatestChapter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(inContext, ReadingActivity.class);
                         intent.putExtra(GlobalConstant.EXTRA_BOOK_ID, book.getId());
-                        intent.putExtra(GlobalConstant.EXTRA_CHAPTER_ID, book.getLaestChapterId());
+                        intent.putExtra(GlobalConstant.EXTRA_CHAPTER_ID, book.getLatestChapterId());
                         inContext.startActivity(intent);
                     }
                 });
@@ -317,7 +320,7 @@ public class BookDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
                 bookName.setText(book.getName());
 
-                bookLatestChapter.setText("最新章节\n" + book.getLaestChapterName());
+                bookLatestChapter.setText("最新章节\n" + book.getLatestChapterTitle());
             }
         }
 

@@ -21,13 +21,15 @@ import java.util.zip.Inflater;
 public class BookCatalogListViewAdapter extends BaseAdapter {
 
     private List<String> mChapters;
+    private boolean mIsPosOrder = false;
 
     public BookCatalogListViewAdapter() {
         mChapters = new ArrayList<>();
     }
 
-    public void notifyChange(@NonNull List<String> chapters) {
+    public void notifyChange(@NonNull List<String> chapters, boolean isPosOrder) {
         mChapters = chapters;
+        mIsPosOrder = isPosOrder;
         notifyDataSetChanged();
     }
 
@@ -38,7 +40,11 @@ public class BookCatalogListViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mChapters.get(mChapters.size() - position - 1);
+        int realPos = position;
+        if (!mIsPosOrder) {
+            realPos = mChapters.size() - position - 1;
+        }
+        return mChapters.get(realPos);
     }
 
     @Override
@@ -59,7 +65,11 @@ public class BookCatalogListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.chapterTitleTV.setText(mChapters.get(mChapters.size() - position - 1));
+        int realPos = position;
+        if (!mIsPosOrder) {
+            realPos = mChapters.size() - position - 1;
+        }
+        viewHolder.chapterTitleTV.setText(mChapters.get(realPos));
 
         return convertView;
     }

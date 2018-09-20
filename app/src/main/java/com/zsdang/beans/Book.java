@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -19,23 +17,27 @@ public class Book implements Parcelable {
     private String mAuthor;
     private String mImg;
     private String mDesc;
+    private String mCategoryId;
     private String mCategory;
+    private String mFirstChapterId;
+    private String mLatestChapterId;
+    private String mLatestChapterTitle;
+    private String mLatestChapterDate;
+    private boolean mLatestChapterIsRead;
+    private String mStatus;
+    private boolean mIsReading;
+
+    private boolean mSelect;
+
     private List<String> mChapterIdList;
     private List<String> mChapterTitleList;
-    private String mLaestChapterId;
-    private String mLaestChapterName;
-    private boolean mSelect;
 
     public Book() {
         mChapterIdList = new ArrayList<>();
         mChapterTitleList = new ArrayList<>();
         mSelect = false;
-    }
-
-    public Book(String name, String img) {
-        this();
-        mName = name;
-        mImg = img;
+        mLatestChapterIsRead = true;
+        mIsReading = false;
     }
 
     public Book(String id, String name, String img) {
@@ -52,6 +54,24 @@ public class Book implements Parcelable {
         mAuthor = author;
         mImg = img;
         mDesc = desc;
+    }
+
+    public Book(String id, String name, String author, String img, String desc, String categoryId,
+                String category, String firstChapterId, String latestChapterId,
+                String latestChapterTitle, String latestChapterDate, String status) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mCategoryId = categoryId;
+        mCategory = category;
+        mFirstChapterId = firstChapterId;
+        mLatestChapterId = latestChapterId;
+        mLatestChapterTitle = latestChapterTitle;
+        mLatestChapterDate = latestChapterDate;
+        mStatus = status;
     }
 
     public Book(String id, String name, String author, String img, String desc, String category) {
@@ -72,8 +92,8 @@ public class Book implements Parcelable {
         mAuthor = author;
         mImg = img;
         mDesc = desc;
-        mLaestChapterId = laestChapterId;
-        mLaestChapterName = laestChapterName;
+        mLatestChapterId = laestChapterId;
+        mLatestChapterTitle = laestChapterName;
     }
 
     public Book(String id, String name, String author, String img, String desc, String category,
@@ -85,8 +105,8 @@ public class Book implements Parcelable {
         mImg = img;
         mDesc = desc;
         mCategory = category;
-        mLaestChapterId = laestChapterId;
-        mLaestChapterName = laestChapterName;
+        mLatestChapterId = laestChapterId;
+        mLatestChapterTitle = laestChapterName;
     }
 
     public String getId() {
@@ -113,6 +133,76 @@ public class Book implements Parcelable {
         return mDesc;
     }
 
+    public String getCategoryId() {
+        return mCategoryId;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public String getFirstChapterId() {
+        return mFirstChapterId;
+    }
+
+    public void setFirstChapterId(String firstChapterId) {
+        mFirstChapterId = firstChapterId;
+    }
+
+    public String getLatestChapterId() {
+        return mLatestChapterId;
+    }
+
+    public void setLatestChapterId(String latestChapterId) {
+        mLatestChapterId = latestChapterId;
+    }
+
+    public String getLatestChapterTitle() {
+        return mLatestChapterTitle;
+    }
+
+    public void setLatestChapterTitle(String latestChapterTitle) {
+        mLatestChapterTitle = latestChapterTitle;
+    }
+
+    public String getLatestChapterDate() {
+        return mLatestChapterDate;
+    }
+
+    public void setLatestChapterDate(String latestChapterDate) {
+        mLatestChapterDate = latestChapterDate;
+    }
+
+    public boolean getLatestChapterIsRead() {
+        return mLatestChapterIsRead;
+    }
+
+    public void setLatestChapterIsRead(boolean latestChapterIsRead) {
+        mLatestChapterIsRead = latestChapterIsRead;
+    }
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
+    public boolean getIsReading() {
+        return mIsReading;
+    }
+
+    public void setIsReading(boolean isReading) {
+        mIsReading = isReading;
+    }
+
+
+
     public List<String> getChapterIdList() {
         return mChapterIdList;
     }
@@ -121,17 +211,7 @@ public class Book implements Parcelable {
         return mChapterTitleList;
     }
 
-    public String getLaestChapterId() {
-        return mLaestChapterId;
-    }
 
-    public String getLaestChapterName() {
-        return mLaestChapterName;
-    }
-
-    public void setLaestChapterName(String laestChapterName) {
-        mLaestChapterName = laestChapterName;
-    }
 
     public boolean getSelect() {
         return mSelect;
@@ -139,13 +219,6 @@ public class Book implements Parcelable {
 
     public void setSelect(boolean select) {
         mSelect = select;
-    }
-
-    public String getCategory() {
-        return mCategory;
-    }
-    public void setCategory(String category) {
-        mCategory = category;
     }
 
     @Override

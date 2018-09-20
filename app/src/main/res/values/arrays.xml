@@ -6,4 +6,16 @@
         <item>缓存本书</item>
         <item>移出书架</item>
     </string-array>
+
+    <string-array name="bs_read_null_item_name">
+        <item>火热推荐</item>
+        <item>本地导入</item>
+        <item>WiFi传书</item>
+    </string-array>
+
+    <array name="bs_read_null_item_drawable">
+        <item>@drawable/ic_bs_null_read_item_recommend</item>
+        <item>@drawable/ic_bs_null_read_item_local_import</item>
+        <item>@drawable/ic_bs_null_read_item_wifi_transfer</item>
+    </array>
 </resources>

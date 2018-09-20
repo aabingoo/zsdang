@@ -4,20 +4,32 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 
 import com.zsdang.LogUtils;
 import com.zsdang.beans.Book;
 import com.zsdang.data.local.LocalBooksProvider;
+import com.zsdang.data.web.DataRequestCallback;
+import com.zsdang.data.web.server.DataServiceManager;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_AUTHOR;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_CATEGORY;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_CATEGORY_ID;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_FIRST_CHAPTER_ID;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_ID;
-import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_INTRODUCTION;
-import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_DESCRIPTION;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER_DATE;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER_ID;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER_ISREAD;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_LATEST_CHAPTER_TITLE;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_NAME;
 import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_IMG_NAME;
+import static com.zsdang.data.local.LocalBooksDbOpenHelper.BOOKS_COLUMN_STATUS;
 
 /**
  * Created by BinyongSu on 2018/6/7.
@@ -28,6 +40,11 @@ public class DataManager {
     private static final String TAG = "DataManager";
 
     private Context mContext;
+
+    public interface QueryBooksCallback {
+        void onFailure();
+        void onSuccess(List<Book> books);
+    }
 
     public DataManager(Context context) {
         mContext = context;
@@ -56,22 +73,23 @@ public class DataManager {
 //                            + " BOOKS_COLUMN_NAME:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_NAME))
 //                            + " BOOKS_COLUMN_AUTHOR:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_AUTHOR))
 //                            + " BOOKS_COLUMN_IMG_NAME:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_IMG_NAME))
-//                            + " BOOKS_COLUMN_INTRODUCTION:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_INTRODUCTION))
-//                            + " BOOKS_COLUMN_LATEST_CHAPTER:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER)));
+//                            + " BOOKS_COLUMN_DESCRIPTION:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_DESCRIPTION))
+//                            + " BOOKS_COLUMN_LATEST_CHAPTER_TITLE:" + cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER_TITLE)));
                     Book book = new Book(cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_ID)),
                             cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_NAME)),
                             cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_AUTHOR)),
                             cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_IMG_NAME)),
-                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_INTRODUCTION))
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_DESCRIPTION)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_CATEGORY_ID)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_CATEGORY)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_FIRST_CHAPTER_ID)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER_ID)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER_TITLE)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER_DATE)),
+                            cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_STATUS))
                     );
-                    book.setLaestChapterName(cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER)));
+                    book.setLatestChapterTitle(cursor.getString(cursor.getColumnIndex(BOOKS_COLUMN_LATEST_CHAPTER_TITLE)));
                     books.add(book);
-
-//                    int localFileNameIndex = cursor.getColumnIndex("local_filename");
-//                    if (localFileNameIndex >= 0) {
-//                        File file = new File(cursor.getString(localFileNameIndex));
-//                        file.getAbsolutePath()
-//                    }
 
                 } while (cursor.moveToNext());
             }
@@ -80,25 +98,27 @@ public class DataManager {
     }
 
     public void addToBookshelf(Book book) {
-        LogUtils.d("Query", "BOOKS_COLUMN_ID:" + book.getId()
-                            + " BOOKS_COLUMN_NAME:" + book.getName()
-                            + " BOOKS_COLUMN_AUTHOR:" + book.getAuthor()
-                            + " BOOKS_COLUMN_IMG_NAME:" + book.getImg()
-                            + " BOOKS_COLUMN_INTRODUCTION:" + book.getDesc()
-                            + " BOOKS_COLUMN_LATEST_CHAPTER:" + book.getLaestChapterName());
         ContentValues contentValues = new ContentValues();
+
         contentValues.put(BOOKS_COLUMN_ID, book.getId());
         contentValues.put(BOOKS_COLUMN_NAME, book.getName());
         contentValues.put(BOOKS_COLUMN_AUTHOR, book.getAuthor());
         contentValues.put(BOOKS_COLUMN_IMG_NAME, book.getImg());
-        contentValues.put(BOOKS_COLUMN_INTRODUCTION, book.getDesc());
-        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER, book.getLaestChapterName());
+        contentValues.put(BOOKS_COLUMN_DESCRIPTION, book.getDesc());
+        contentValues.put(BOOKS_COLUMN_CATEGORY_ID, book.getCategoryId());
+        contentValues.put(BOOKS_COLUMN_CATEGORY, book.getCategory());
+        contentValues.put(BOOKS_COLUMN_FIRST_CHAPTER_ID, book.getFirstChapterId());
+        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_ID, book.getLatestChapterId());
+        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_TITLE, book.getLatestChapterTitle());
+        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_DATE, book.getLatestChapterDate());
+//        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_ISREAD, book.getLatestChapterDate());
+        contentValues.put(BOOKS_COLUMN_STATUS, book.getStatus());
         mContext.getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
     }
 
-    public void deleteFromBookshelf(List<Book> books) {
+    public int deleteFromBookshelf(List<Book> books) {
         String where = formWhere(books);
-        mContext.getContentResolver().delete(LocalBooksProvider.CONTENT_URI, where, null);
+        return mContext.getContentResolver().delete(LocalBooksProvider.CONTENT_URI, where, null);
     }
 
     private String formWhere(List<Book> books) {
@@ -115,6 +135,46 @@ public class DataManager {
             }
         }
         return where;
+    }
+
+    public void queryLatestChapter(final Book checkBook, final QueryBooksCallback callback) {
+        DataServiceManager dataServiceManager = new DataServiceManager();
+        dataServiceManager.queryBookDetial(checkBook.getId(), new DataRequestCallback() {
+            @Override
+            public void onFailure() {
+                if (callback != null) {
+                    callback.onFailure();
+                }
+            }
+
+            @Override
+            public void onSuccess(@NonNull String result) {
+                try {
+                    JSONObject pageJson = new JSONObject(result);
+                    JSONObject bookJson = pageJson.getJSONObject("data");
+
+                    List<Book> books = new ArrayList<>();
+                    Book book = new Book(bookJson.getString("Id"),
+                            bookJson.getString("Name"),
+                            bookJson.getString("Author"),
+                            bookJson.getString("Img"),
+                            bookJson.getString("Desc"),
+                            bookJson.getString("CId"),
+                            bookJson.getString("CName"),
+                            bookJson.getString("FirstChapterId"),
+                            bookJson.getString("LastChapterId"),
+                            bookJson.getString("LastChapter"),
+                            bookJson.getString("LastTime"),
+                            bookJson.getString("BookStatus"));
+                    books.add(book);
+                    if (callback != null) {
+                        callback.onSuccess(books);
+                    }
+                } catch (Exception e) {
+                    LogUtils.d(TAG, "Exception on queryLatestChapter:" + e.toString());
+                }
+            }
+        });
     }
 
 }

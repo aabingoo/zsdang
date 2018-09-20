@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/reading_book_item_height"
+    android:background="@color/color_theme"
+    android:layout_marginBottom="@dimen/reading_book_bottom"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/reading_book_cover"
+        android:layout_width="@dimen/bs_null_reading_item_img_size"
+        android:layout_height="@dimen/bs_null_reading_item_img_size"
+        android:scaleType="fitXY"
+        android:background="@drawable/ic_bs_null_reading_item_img"/>
+
+    <TextView
+        android:id="@+id/reading_book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bs_null_reading_item_name_top"
+        android:textSize="@dimen/bs_null_reading_item_name_text_size"
+        android:textColor="@color/color_white"
+        android:text="@string/bs_null_reading_item_name"/>
+
+</LinearLayout>

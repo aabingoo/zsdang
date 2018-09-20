@@ -36,8 +36,8 @@ public class BookstoreRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     String[] mNavicionTitles = {"玄幻奇幻", "武侠仙侠", "都市情言", "历史军事", "科幻灵异", "网游竞技", "女生频道", "同人小说"};
     String[] mCategoryTitles = {"重磅推荐", "火热新书", "热门连载", "完本精选"};
-    private int[] mNavicationImgIds = {R.drawable.ic_xuanhuan, R.drawable.ic_wuxia, R.drawable.ic_dushi, R.drawable.ic_lishi,
-                            R.drawable.ic_lingyi, R.drawable.ic_wangyou, R.drawable.ic_nvsheng, R.drawable.ic_tongren};
+    private int[] mNavicationImgIds = {R.drawable.ic_bs_nav_xuanhuan, R.drawable.ic_bs_nav_wuxia, R.drawable.ic_bs_nav_city, R.drawable.ic_bs_nav_history,
+                            R.drawable.ic_bs_nav_ghost, R.drawable.ic_bs_nav_game, R.drawable.ic_bs_nav_girl, R.drawable.ic_bs_nav_humen};
     private List<Book> mRecommendBooks;
     private List<Book> mNewBooks;
     private List<Book> mSerializeBooks;

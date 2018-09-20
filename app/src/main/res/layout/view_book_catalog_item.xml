@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/book_detail_item_height"
+    android:layout_height="@dimen/catalog_list_item_height"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/chapter_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:paddingEnd="8dp"
-        android:paddingStart="8dp"
+        android:layout_marginStart="@dimen/catalog_list_item_text_margin"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="@dimen/book_detail_item_text_size"/>
+        android:textSize="@dimen/catalog_list_item_text_size"
+        android:text="@string/delete_warning"/>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/catalog_list_item_image_size"
+        android:layout_height="@dimen/catalog_list_item_image_size"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/catalog_list_item_text_margin"
+        android:background="@drawable/ic_catalog_cache"/>
+
+</RelativeLayout>

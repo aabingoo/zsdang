@@ -222,7 +222,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
                 Book book = new Book(similarBookItem.getString("Id"),
                         similarBookItem.getString("Name"),
                         similarBookItem.getString("Img"));
-                book.setLaestChapterName(similarBookItem.getString("LastChapter"));
+                book.setLatestChapterTitle(similarBookItem.getString("LastChapter"));
                 otherWrittenBooks.add(book);
             }
         } catch (Exception e) {

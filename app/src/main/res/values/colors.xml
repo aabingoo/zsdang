@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="color_theme">#3DB9FE</color>
+    <color name="color_theme">#FF3DB9FE</color>
     <color name="color_transparent">#00000000</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_actionmode">#3F51B5</color>
@@ -14,5 +14,19 @@
     <color name="color_red_no_select">#88ff4444</color>
 
     <color name="color_book_detail_tools_navigation">#aa000000</color>
+
+
+    <color name="color_black_text">#88000000</color>
+
+
+    <color name="color_black_btn_border">#22000000</color>
+
+
+    <!--BookShelf-->
+    <color name="bs_null_read_item_bg">#FFDFDFDF</color>
+    <color name="bs_null_read_item_img">#88000000</color>
+    <color name="bs_null_read_item_name">#55000000</color>
+
+
 
 </resources>
