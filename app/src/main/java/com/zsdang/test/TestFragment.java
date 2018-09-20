@@ -70,35 +70,35 @@ public class TestFragment extends Fragment {
 //
 //        insertBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 //                insert();
 //            }
 //        });
 //
 //        queryBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 //                query(null, null);
 //            }
 //        });
 //
 //        deleteBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 //                delete();
 //            }
 //        });
 //
 //        updateBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 //
 //            }
 //        });
 //
 //        updateDBBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 //                LocalBooksDbOpenHelper helper = new LocalBooksDbOpenHelper(getActivity());
 //                helper.onUpgrade(helper.getWritableDatabase(), 0, 1);
 //            }
@@ -106,7 +106,7 @@ public class TestFragment extends Fragment {
 //
 //        ((Button) rootView.findViewById(R.id.search)).setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
+//            public void onTabClick(View v) {
 ////                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
 ////                startActivity(intent);
 //

@@ -20,15 +20,6 @@
             android:layout_height="wrap_content"
             android:background="@color/color_theme">
 
-            <!--<android.support.v7.widget.SearchView-->
-                <!--android:id="@+id/sv_book_search"-->
-                <!--android:layout_width="260dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:imeOptions="actionSearch"-->
-                <!--app:queryHint="搜索"-->
-                <!--app:iconifiedByDefault="false"-->
-                <!--android:background="@drawable/bg_searchview" />-->
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

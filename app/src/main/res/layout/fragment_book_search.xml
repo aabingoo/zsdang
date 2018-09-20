@@ -24,33 +24,11 @@
             android:layout_alignParentEnd="true"/>
 
         <com.zsdang.view.TabLayout
+            android:id="@+id/popular_search_tl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/popular_search_tv"
-            android:layout_marginTop="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tab"
-                android:gravity="center"
-                android:text="圣墟" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tab"
-                android:gravity="center"
-                android:text="凡人修仙传" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_tab"
-                android:gravity="center"
-                android:text="凡人修仙之仙界篇" />
-
-        </com.zsdang.view.TabLayout>
+            android:layout_marginTop="16dp" />
 
     </RelativeLayout>
 
@@ -83,8 +61,6 @@
                 android:layout_height="wrap_content" />
 
         </ScrollView>
-
-
 
     </RelativeLayout>
 

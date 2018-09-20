@@ -12,6 +12,7 @@ import com.zsdang.data.local.LocalBooksProvider;
 import com.zsdang.data.web.DataRequestCallback;
 import com.zsdang.data.web.server.DataServiceManager;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -137,6 +138,11 @@ public class DataManager {
         return where;
     }
 
+    /**
+     * Async
+     * @param checkBook
+     * @param callback
+     */
     public void queryLatestChapter(final Book checkBook, final QueryBooksCallback callback) {
         DataServiceManager dataServiceManager = new DataServiceManager();
         dataServiceManager.queryBookDetial(checkBook.getId(), new DataRequestCallback() {
@@ -175,6 +181,56 @@ public class DataManager {
                 }
             }
         });
+    }
+
+    /**
+     * Async
+     * @param keyword
+     * @param pageNum
+     * @param callback
+     */
+    public void searchBooksByPage(String keyword, int pageNum, final QueryBooksCallback callback) {
+        DataServiceManager dataServiceManager = new DataServiceManager();
+        dataServiceManager.searchBooksByPage(keyword, pageNum, new DataRequestCallback() {
+            @Override
+            public void onFailure() {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull String result) {
+                LogUtils.d(TAG, "onSuccess:" + result);
+                try {
+                    JSONObject pageJson = new JSONObject(result);
+                    if (callback != null) {
+                        callback.onSuccess(getSearchedBooks(pageJson));
+                    }
+                } catch (Exception e) {
+                    LogUtils.d(TAG, "Exception on queryBookstore.");
+                }
+            }
+        });
+    }
+
+    private List<Book> getSearchedBooks(JSONObject jsonObject) {
+        List<Book> result = new ArrayList<>();
+        try {
+            JSONArray bookArray = jsonObject.getJSONArray("data");
+            for (int i = 0; i < bookArray.length(); i++) {
+                JSONObject bookJson = bookArray.getJSONObject(i);
+                Book book = new Book(bookJson.getString("Id"),
+                        bookJson.getString("Name"),
+                        bookJson.getString("Author"),
+                        bookJson.getString("Img"),
+                        bookJson.getString("Desc"),
+                        bookJson.getString("LastChapterId"),
+                        bookJson.getString("LastChapter"));
+                result.add(book);
+            }
+        } catch (Exception e) {
+            LogUtils.d(TAG, "Exception on queryBookstore.");
+        }
+        return result;
     }
 
 }
