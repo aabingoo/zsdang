@@ -52,7 +52,7 @@ public class BookSearchActivity extends AppCompatActivity
 
     private void initToolbar() {
         mToolbar = findViewById(R.id.search_toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

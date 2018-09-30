@@ -22,9 +22,6 @@ public class BookSearchResultFragment extends Fragment {
 
     private final String TAG = "BookSearchResultFragment";
 
-    private String mKeyword;
-    private Handler mHandler;
-    private List<Book> mSearchedBooks;
     private RecyclerView mBookSearchRecyclerView;
     private BookSearchResultRecyclerViewAdpater mBookSearchResultRecyclerViewAdpater;
 

@@ -56,24 +56,6 @@ public class Book implements Parcelable {
         mDesc = desc;
     }
 
-    public Book(String id, String name, String author, String img, String desc, String categoryId,
-                String category, String firstChapterId, String latestChapterId,
-                String latestChapterTitle, String latestChapterDate, String status) {
-        this();
-        mId = id;
-        mName = name;
-        mAuthor = author;
-        mImg = img;
-        mDesc = desc;
-        mCategoryId = categoryId;
-        mCategory = category;
-        mFirstChapterId = firstChapterId;
-        mLatestChapterId = latestChapterId;
-        mLatestChapterTitle = latestChapterTitle;
-        mLatestChapterDate = latestChapterDate;
-        mStatus = status;
-    }
-
     public Book(String id, String name, String author, String img, String desc, String category) {
         this();
         mId = id;
@@ -107,6 +89,40 @@ public class Book implements Parcelable {
         mCategory = category;
         mLatestChapterId = laestChapterId;
         mLatestChapterTitle = laestChapterName;
+    }
+
+    public Book(String id, String name, String author, String img, String desc, String category,
+                String latestChapterId, String latestChapterTitle, String latestChapterDate,
+                String status) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mCategory = category;
+        mLatestChapterId = latestChapterId;
+        mLatestChapterTitle = latestChapterTitle;
+        mLatestChapterDate = latestChapterDate;
+        mStatus = status;
+    }
+
+    public Book(String id, String name, String author, String img, String desc, String categoryId,
+                String category, String firstChapterId, String latestChapterId,
+                String latestChapterTitle, String latestChapterDate, String status) {
+        this();
+        mId = id;
+        mName = name;
+        mAuthor = author;
+        mImg = img;
+        mDesc = desc;
+        mCategoryId = categoryId;
+        mCategory = category;
+        mFirstChapterId = firstChapterId;
+        mLatestChapterId = latestChapterId;
+        mLatestChapterTitle = latestChapterTitle;
+        mLatestChapterDate = latestChapterDate;
+        mStatus = status;
     }
 
     public String getId() {

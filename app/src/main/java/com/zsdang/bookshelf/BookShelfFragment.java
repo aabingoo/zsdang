@@ -37,7 +37,7 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     private TextView mSelectDeleteTextView;
 
     // Handle the user action from BookShelfFragment
-    private BookShelfActionHandler mActionHandler;
+    private BookShelfPresenter mActionHandler;
 
     private ActionMode mActionMode;
 
@@ -49,7 +49,7 @@ public class BookShelfFragment extends Fragment implements Toolbar.OnMenuItemCli
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActionHandler = new BookShelfActionHandler(this);
+        mActionHandler = new BookShelfPresenter(this);
     }
 
     @Nullable

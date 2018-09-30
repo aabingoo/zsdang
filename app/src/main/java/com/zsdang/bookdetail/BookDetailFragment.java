@@ -85,7 +85,7 @@ public class BookDetailFragment extends Fragment implements SwipeRefreshLayout.O
         View rootView = inflater.inflate(R.layout.fragment_book_detail, container, false);
         // ToolBar
         mToolbar = rootView.findViewById(R.id.toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

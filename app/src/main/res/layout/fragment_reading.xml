@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/inner_item_padding"
-            android:textSize="@dimen/reading_text_size"/>
+            android:textSize="@dimen/reading_text_size"
+            android:background="#FFFFF9EB"/>
     </ScrollView>
 
 </LinearLayout>

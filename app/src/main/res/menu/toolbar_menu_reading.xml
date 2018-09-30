@@ -9,14 +9,14 @@
         android:id="@+id/search_item"
         android:title="Search"
         android:orderInCategory="60"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_search_black"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/add_item"
         android:title="Add"
         android:orderInCategory="60"
-        android:icon="@drawable/ic_add_white"
+        android:icon="@drawable/ic_add_black"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.zsdang.LogUtils;
@@ -114,7 +115,9 @@ public class DataManager {
         contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_DATE, book.getLatestChapterDate());
 //        contentValues.put(BOOKS_COLUMN_LATEST_CHAPTER_ISREAD, book.getLatestChapterDate());
         contentValues.put(BOOKS_COLUMN_STATUS, book.getStatus());
-        mContext.getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
+
+        Uri result = mContext.getContentResolver().insert(LocalBooksProvider.CONTENT_URI,contentValues);
+        LogUtils.d(TAG, "addToBookshelf:" + result);
     }
 
     public int deleteFromBookshelf(List<Book> books) {
@@ -223,8 +226,11 @@ public class DataManager {
                         bookJson.getString("Author"),
                         bookJson.getString("Img"),
                         bookJson.getString("Desc"),
+                        bookJson.getString("CName"),
                         bookJson.getString("LastChapterId"),
-                        bookJson.getString("LastChapter"));
+                        bookJson.getString("LastChapter"),
+                        bookJson.getString("UpdateTime"),
+                        bookJson.getString("BookStatus"));
                 result.add(book);
             }
         } catch (Exception e) {

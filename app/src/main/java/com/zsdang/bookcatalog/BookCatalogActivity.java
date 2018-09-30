@@ -63,7 +63,7 @@ public class BookCatalogActivity extends Activity
 
         // ToolBar
         mToolbar = findViewById(R.id.toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

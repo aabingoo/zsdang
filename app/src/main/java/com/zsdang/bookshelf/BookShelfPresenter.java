@@ -20,9 +20,9 @@ import com.zsdang.view.WarnDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookShelfActionHandler {
+public class BookShelfPresenter {
 
-    private final String TAG = "BookShelfActionHandler";
+    private final String TAG = "BookShelfPresenter";
 
     private static final int MESSAGE_UPDATE_LATEST_CHAPTER = 1;
 
@@ -45,7 +45,7 @@ public class BookShelfActionHandler {
     private int mSelectCnt = 0;
     private boolean mIsActionMode = false;
 
-    public BookShelfActionHandler(@NonNull BookShelfFragment fragment) {
+    public BookShelfPresenter(@NonNull BookShelfFragment fragment) {
         mfragment = fragment;
         mHandler = new Handler();//new BookShelfHandler();
         mDataManager = new DataManager(mfragment.getContext());

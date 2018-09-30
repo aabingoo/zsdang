@@ -3,7 +3,6 @@ package com.zsdang.search;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.zsdang.LogUtils;
 import com.zsdang.R;
 import com.zsdang.beans.Book;
 import com.zsdang.data.DataManager;
-import com.zsdang.data.web.server.DataServiceManager;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class BookSearchResultRecyclerViewAdpater extends RecyclerView.Adapter<Re
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.view_search_book_item, parent, false);
+                R.layout.view_booksearch_book_item, parent, false);
         return new SearchedBookItem(parent.getContext(), view);
     }
 
@@ -63,7 +61,7 @@ public class BookSearchResultRecyclerViewAdpater extends RecyclerView.Adapter<Re
         private TextView inBookNameTv;
         private TextView inBookAuthorTv;
         private TextView inDesc;
-        private Button inAddToBookshelfBtn;
+        private TextView inAddToBookshelfBtn;
 
 
         public SearchedBookItem(Context context, View itemView) {

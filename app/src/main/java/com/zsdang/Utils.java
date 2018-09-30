@@ -31,4 +31,41 @@ public class Utils {
             window.setStatusBarColor(activity.getColor(colorId));
         }
     }
+
+    public static void setStatusAndNavigationBarColor(Activity activity, int colorId) {
+        Window window = activity.getWindow();
+        window.setStatusBarColor(activity.getColor(colorId));
+        window.setNavigationBarColor(activity.getColor(colorId));
+    }
+
+    public static void hideStatusAndNavigationBar(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
+    }
+
+    public static void showStatusAndNavigationBar(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    }
+
+    public static void showStatusAndHideNavigationBar(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
+    }
+
+    public static boolean isNavigationBarEnable(Activity activity) {
+        int id = activity.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            return activity.getResources().getBoolean(id);
+        }
+        return false;
+    }
+
 }
